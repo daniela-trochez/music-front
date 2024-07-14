@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Musicoterapia</title>
+  <title>Binaurales</title>
   <style>
     /* Barra de navegacion y footer*/
     * {
@@ -176,6 +176,11 @@
       justify-content: center;
       /* Centrar el contenido horizontalmente */
     }
+    .title span {
+      position: relative;
+      z-index: 1;
+      white-space: nowrap;
+    }
 
     .title::after {
       content: "";
@@ -183,7 +188,7 @@
       height: 105px;
       background: linear-gradient(to right, #ae67d7, #3e85e6);
       position: absolute;
-      left: 78%;
+      left: 75%;
       /* Colocar el círculo a la derecha del span */
       margin-left: 10px;
       /* Ajustar la distancia entre el span y el círculo */
@@ -193,11 +198,7 @@
       z-index: 0;
     }
 
-    .title span {
-      position: relative;
-      z-index: 1;
-      white-space: nowrap;
-    }
+
 
     .image-container {
       position: relative;
