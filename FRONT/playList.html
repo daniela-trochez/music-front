@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../Estilos/styleHF.css">
   <title>Musicoterapia</title>
   <style>
     /* Barra de navegacion y footer*/
@@ -23,85 +24,7 @@
       margin: 0;
     }
 
-    /* Estilos del encabezado de la página */
-    .navbar {
-      background-color: #fff;
-      padding: 1em;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ddd;
-      position: relative;
-      /* Asegura que `z-index` funcione correctamente */
-      z-index: 1000;
-      /* Asegura que esté por encima del resto del contenido */
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo img {
-      width: 65px;
-      height: 60px;
-      margin-right: 10px;
-    }
-
-    .navbar span {
-      color: #59009A;
-      font-weight: bold;
-      margin-right: 20px;
-    }
-
-    .servicios {
-      position: relative;
-    }
-
-    .submenu {
-      position: absolute;
-      /* Asegura que esté sobre el contenido */
-      background-color: #fff;
-      padding: 5px 5px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      display: none;
-      top: 40px;
-      left: 0;
-      width: auto;
-      z-index: 1001;
-      /* Asegura que esté por encima del contenido `navbar` */
-    }
-
-    .servicios:hover .submenu {
-      display: block;
-    }
-
-    .submenu ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .submenu li {
-      padding: 20px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .submenu li:hover {
-      background-color: #f0f0f0;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-    }
-
-    .imagen-usuario {
-      width: 30px;
-      height: 30px;
-    }
-
+    /* INICIO DEL CONTENIDO CENTRAL */
 
     .container {
       display: flex;
@@ -257,110 +180,40 @@
   transition: transform 0.3s; /* Añade una transición suave */
 }
 
-    /* FOOT */
-    .footer {
-      background-color: #59009A;
-      color: #fff;
-      padding: 35px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      /* Permite que los elementos se envuelvan si no caben en una sola fila */
-    }
-
-    .footer-links {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      /* Envuelve los elementos si no caben en una sola fila */
-    }
-
-    .contactanos,
-    .canales-atencion,
-    .social-media {
-      display: flex;
-      flex-direction: column;
-      /* Organiza los elementos en columnas */
-      align-items: center;
-      /* Centra los elementos horizontalmente */
-      margin-bottom: 20px;
-      /* Espacio inferior entre las secciones */
-      font-family: 'Roboto Slab', serif;
-      /* Añadido para la fuente */
-    }
-
-    .contactanos span,
-    .canales-atencion span,
-    .social-media span {
-      margin-bottom: 10px;
-      /* Espacio inferior del texto */
-    }
-
-    .imagenes-container {
-      display: flex;
-      align-items: center;
-    }
-
-    .imagen-footer {
-      width: 30px;
-      /* Ancho de las imágenes */
-      height: 30px;
-      /* Altura de las imágenes */
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      /* Transición al pasar el cursor */
-    }
-
-    .imagen-footer:hover {
-      transform: scale(1.2);
-      /* Aumenta ligeramente el tamaño al pasar el cursor */
-      opacity: 0.7;
-      /* Reduce la opacidad al pasar el cursor */
-    }
-
-    .imagen-interactiva {
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      /* Transición al pasar el cursor */
-    }
-
-    .imagen-interactiva:hover {
-      transform: scale(1.2);
-      /* Aumenta ligeramente el tamaño al pasar el cursor */
-      opacity: 0.7;
-      /* Reduce la opacidad al pasar el cursor */
-    }
-
-    .texto-footer {
-      text-align: right;
-      align-items: center;
-      font-family: 'Roboto Slab', serif;
-      /* Añadido para la fuente */
-    }
+    
   </style>
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="logo">
-      <img src="img/logo.png" alt="Logo de Atención Profesional">
-      <span>Musicoterapia</span>
-    </div>
-    <div class="servicios">
-      <span id="servicios-button">Servicios</span>
-      <div class="submenu">
-        <ul>
-          <li>Biblioterapia</li>
-          <li>Arteterapia</li>
-          <li>Musicoterapia</li>
-          <li>Ejercicios</li>
-        </ul>
+  <!-- HEADER -->
+  <header>
+
+    <nav class="navbar">
+      <div class="logo">
+          <img src="imgHF/logo.png" alt="Logo ">
+          <span>Musicoterapia</span>
       </div>
-    </div>
-    <div class="user-info">
-      <span>Juanito Alimaña</span>
-      <img class="imagen-usuario" src="img/user.png" alt="Foto de perfil del usuario">
-    </div>
+      <div class="servicios">
+          <span>Servicios</span>
+          <div class="submenu">
+              <ul>
+                  <li>Biblioterapia</li>
+                  <li>Arteterapia</li>
+                  <li>Musicoterapia</li>
+                  <li>Ejercicios</li>
+              </ul>
+          </div>
+      </div>
+      <div class="user-info">
+          <span>Juanito Alimaña</span>
+          <img class="imagen-usuario" src="imgHF/user.png" alt="Foto de perfil del usuario">
+      </div>
   </nav>
+    
+  </header>
+
+  <!-- HEADER FIN -->
+
   <div class="container">
     <aside class="sidebar">
       <div class="menu-item">
@@ -405,7 +258,6 @@
           <span>Me gusta</span>
         </a>
       </div>
-      <!-- AGREGAR ....BUSCAR -->
       <div class="menu-item">
         <a href="buscar.html">
           <img src="img/buscar.png" alt="Icon" />
@@ -427,106 +279,132 @@
 
         <div class="folder-container">
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
           <div class="folder">
-            <img src="imgplaylist/pl.png" alt="Folder">
+            <a href="../Musicoterapia/Reproductor2.html">
+              <img src="imgplaylist/pl.png" alt="Folder">
+            </a>
             <p>Playlist 1</p>
           </div>
 
-
-          <!-- Additional folder items can be added here -->
-        </div>
 
 
     </main>
   </div>
-  <!-- FOOT -->
-  <footer class="footer">
-    <div class="footer-links">
-      <div class="contactanos">
-        <span>Contactanos</span>
-        <div class="imagenes-container">
-          <img class="imagen-footer" src="imgHF/whats.png" alt="Whatsapp">
-          <img class="imagen-footer" src="imgHF/telegram.png" alt="Telegram">
+      <!-- INICIO FOOTER -->
+      <footer class="footer">
+        <div class="footer-container">
+            <div class="contact-item">
+                <span>Contáctanos</span>
+                <div class="iconos">
+                    <a href="#"><img src="imgHF/whats.png" alt="WhatsApp"></a>
+                </div>
+            </div>
+            <div class="contact-item">
+                <span>Canales de atención</span>
+                <div class="iconos">
+                    <a href="#"><img src="imgHF/telegram.png" alt="Telegram"></a>
+                    <a href="#"><img src="imgHF/correo.png" alt="Email"></a>
+                </div>
+            </div>
+            <div class="contact-item">
+                <span>Redes sociales</span>
+                <div class="iconos">
+                    <a href="#"><img src="imgHF/fb.png" alt="Facebook"></a>
+                    <a href="#"><img src="imgHF/insta.png" alt="Instagram"></a>
+                </div>
+            </div>
+            <a class="quienes-somos" href="#">¿Quiénes somos?</a>
         </div>
-      </div>
-    </div>
-    <div class="canales-atencion">
-      <span>Canales de atencion</span>
-      <div class="imagenes-container">
-        <img class="imagen-footer" src="imgHF/correo.png" alt="Correo">
-      </div>
-    </div>
-    <div class="social-media">
-      <span>Redes Sociales</span>
-      <div class="imagenes-container">
-        <img class="imagen-footer" src="imgHF/fb.png" alt="Facebook">
-        <img class="imagen-footer" src="imgHF/insta.png" alt="Instagram">
-      </div>
-    </div>
-    </div>
-    <div class="texto-footer">
-      <span>¿Quienes somos? </span>
-    </div>
-  </footer>
+    </footer>
 
 
 </body>
