@@ -992,10 +992,12 @@ h1{
         // Remover el audio de la lista
         likedAudios = likedAudios.filter(audio => audio.url !== audioUrl);
         element.classList.remove('active');  // Desactivar el corazón
+
     } else {
         // Agregar el audio a la lista
         likedAudios.push(likedAudio);
         element.classList.add('active');  // Activar el corazón
+
     }
 
     // Guardar la lista actualizada en el localStorage
@@ -1006,6 +1008,8 @@ h1{
 
 
   }
+
+
 
 
   // configurar audios 
@@ -1111,6 +1115,15 @@ h1{
             }
         });
 
+
+           // Actualizar la barra de progreso
+    audioPlayer.addEventListener('timeupdate', function () {
+        const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.value = progressPercentage;
+        currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
+        totalDurationElement.textContent = formatTime(audioPlayer.duration);
+    });
+
         // Asegurar que el audio esté completamente cargado antes de usar su duración
         audioPlayer.addEventListener('loadedmetadata', function () {
             totalDurationElement.textContent = formatTime(audioPlayer.duration);
@@ -1129,7 +1142,7 @@ h1{
                 currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
             }
            
-        });
+        }); 
 
         // Permitir que el usuario cambie el progreso al arrastrar la barra
         progressBar.addEventListener('input', function () {
