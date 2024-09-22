@@ -256,7 +256,7 @@ h1{
         position: relative;
       }
 
-      /* Estilos de la portada del album */
+      /* Estilos de la portada del a*/
       .album-cover {
         width: 200px;
         height: 200px;
@@ -901,7 +901,6 @@ h1{
 
 
 
-    const audioPlayer = new Audio(); // Inicializar el reproductor de audio
 
 
 
@@ -963,11 +962,11 @@ h1{
         horizontalList.style.display = "none";
       }
     }
+    // CORAZON LIKE
 
 
-    
     function toggleLike(element) {
-      element.classList.toggle('active');
+    element.classList.toggle('active');
 
     // Obtenemos el audio actual que está sonando
     const audioTitle = document.getElementById('audio-title').textContent;
@@ -993,45 +992,111 @@ h1{
     const audioExists = likedAudios.find(audio => audio.url === audioUrl);
 
     if (audioExists) {
-        // Remover el audio de la lista
+        // Remover el audio de la lista y del contenedor en la vista 'me gustas'
         likedAudios = likedAudios.filter(audio => audio.url !== audioUrl);
         element.classList.remove('active');  // Desactivar el corazón
-        // Actualizar la vista de "me gustas"
-        removeLikedAudioFromView(audioUrl);  // Eliminar del DOM
+        removeAudioFromView(audioUrl);  // Llamar para eliminar del contenedor
     } else {
         // Agregar el audio a la lista
         likedAudios.push(likedAudio);
         element.classList.add('active');  // Activar el corazón
-        
-        addLikedAudioToView(likedAudio);  // Añadir a la vista
+           // Llamar a la función para agregar el audio a la vista sin recargar
+        addLikedAudioToView(likedAudio);
     }
 
     // Guardar la lista actualizada en el localStorage
     localStorage.setItem('likedAudios', JSON.stringify(likedAudios));
 
     console.log('Estado actualizado del audio:', likedAudio);
+}
 
 
 
-  }
 
-
-  function removeLikedAudioFromView(audioUrl) {
+// Función para eliminar el audio del contenedor en la vista 'Tus me gustas'
+function removeAudioFromView(audioUrl) {
     const likedTracksList = document.getElementById('liked-tracks-list');
-
-    if (!likedTracksList) {
-        console.error('El contenedor liked-tracks-list no existe.');
-        return;
-    }
-
-    // Encontrar el elemento correspondiente al audioUrl
     const trackElements = likedTracksList.querySelectorAll('.track');
+
     trackElements.forEach(track => {
+        // Verificar si el atributo 'data-url' coincide con el audio a eliminar
         if (track.getAttribute('data-url') === audioUrl) {
-            likedTracksList.removeChild(track);  // Eliminar el elemento del DOM
+            likedTracksList.removeChild(track); // Eliminar el contenedor del DOM
+            console.log(`Eliminado del contenedor: ${audioUrl}`);
         }
     });
-} 
+}
+
+
+// Función para agregar el audio a la vista 'Tus me gustas'
+function addLikedAudioToView(audio) {
+    const likedTracksList = document.getElementById('liked-tracks-list');
+    
+    const trackElement = document.createElement('div');
+    trackElement.classList.add('track');
+    trackElement.setAttribute('data-url', audio.url);  // Guardar la URL en un atributo
+
+    trackElement.innerHTML = `
+        <img src="${audio.albumCover}" alt="${audio.title}" />
+        <div class="track-info">
+            <h3>${audio.title}</h3>
+        </div>
+        <button class="play-btn">&#9654;</button>
+    `;
+
+    // Asociar el botón de reproducción al reproductor
+    const playButton = trackElement.querySelector('.play-btn');
+    playButton.addEventListener('click', function () {
+        loadAudio(audio.url, audio.title, audio.albumCover);
+    });
+
+    likedTracksList.appendChild(trackElement);
+}
+
+
+// se actualiza la lista segun la vista del EXTERIOR
+
+
+window.addEventListener('storage', function(event) {
+    if (event.key === 'likedAudios') {
+        // Llamar a la función para actualizar la lista de audios
+        updateLikedAudiosView();
+    }
+});
+
+function updateLikedAudiosView() {
+    const likedTracksList = document.getElementById('liked-tracks-list');
+    const likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
+
+    if (likedAudios.length === 0) {
+        likedTracksList.innerHTML = '<p>No hay audios guardados.</p>';
+    } else {
+        likedTracksList.innerHTML = ''; // Limpiar la lista
+
+        likedAudios.forEach(audio => {
+            const trackElement = document.createElement('div');
+            trackElement.classList.add('track');
+
+            trackElement.innerHTML = `
+                <img src="${audio.albumCover}" alt="${audio.title}" />
+                <div class="track-info">
+                    <h3>${audio.title}</h3>
+                </div>
+                <button>&#9654;</button>
+            `;
+
+            // Opcional: Reproducir el audio al hacer clic en el botón
+            const playButton = trackElement.querySelector('button');
+            playButton.addEventListener('click', function () {
+                loadAudio(audio.url, audio.title, audio.albumCover);
+            });
+
+            likedTracksList.appendChild(trackElement);
+        });
+    }
+}
+
+
 
 
 
@@ -1041,14 +1106,43 @@ h1{
 
   // configurar audios LIKE
 
-  document.addEventListener('DOMContentLoaded', function () {
-    //const audioPlayer = new Audio();
+  // Definir las variables fuera
+    const audioPlayer = new Audio(); // Inicializar el reproductor de audio
+    const audioTitle = document.getElementById('audio-title');
     const playPauseBtn = document.getElementById('play-pause-btn');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const progressBar = document.getElementById('progress-bar');
     const albumImage = document.getElementById('album-image');
-    const audioTitle = document.getElementById('audio-title');
+    // Función para cargar el audio en el reproductor
+    function loadAudio(audioUrl, title, cover) {
+        audioPlayer.src = audioUrl;
+        audioTitle.textContent = title;
+        albumImage.src = cover;
+        audioPlayer.load();
+        audioPlayer.play();
+        playPauseBtn.innerHTML = '❚❚';  // Cambiar a pausa
+
+
+    // Verificar si el audio está en la lista de "me gusta"
+    let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
+    const audioExists = likedAudios.find(audio => audio.url === audioUrl);
+
+    const likeButton = document.querySelector('.me-gusta');
+
+    // Si el audio está en la lista, ilumina el corazón; si no, lo desilumina
+    if (audioExists) {
+        likeButton.classList.add('active');  // Ilumina el corazón
+    } else {
+        likeButton.classList.remove('active');  // Desilumina el corazón
+    }
+  }
+
+  // Añadir eventos para los botones de play en los audios guardados en 'Tus me gustas'
+  document.addEventListener('DOMContentLoaded', function () {
+    //const audioPlayer = new Audio();
+   
+   
     const currentTimeElement = document.getElementById('current-time');
     const totalDurationElement = document.getElementById('total-duration');
     const likedTracksList = document.getElementById('liked-tracks-list');
@@ -1075,12 +1169,13 @@ h1{
                      
                     
                 </div>
-                <button>&#9654;</button>
+                <button class="play-btn">&#9654;</button>
 
             `;
+            trackElement.setAttribute('data-url', audio.url);  // Guardar la URL en un atributo
 
             // Al hacer clic en el botón, reproducir el audio
-            const playButton = trackElement.querySelector('button');
+            const playButton = trackElement.querySelector('.play-btn');
             playButton.addEventListener('click', function () {
                 loadAudio(audio.url, audio.title, audio.albumCover);
             });
@@ -1089,29 +1184,7 @@ h1{
         });
     }
 
-    // Función para cargar el audio en el reproductor
-    function loadAudio(audioUrl, title, cover) {
-        audioPlayer.src = audioUrl;
-        audioTitle.textContent = title;
-        albumImage.src = cover;
-        audioPlayer.load();
-        audioPlayer.play();
-        playPauseBtn.innerHTML = '❚❚';  // Cambiar a pausa
 
-
-    // Verificar si el audio está en la lista de "me gusta"
-    let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
-    const audioExists = likedAudios.find(audio => audio.url === audioUrl);
-
-    const likeButton = document.querySelector('.me-gusta');
-
-    // Si el audio está en la lista, ilumina el corazón; si no, lo desilumina
-    if (audioExists) {
-        likeButton.classList.add('active');  // Ilumina el corazón
-    } else {
-        likeButton.classList.remove('active');  // Desilumina el corazón
-    }
-    }
 
     // Control del botón de play/pause
     playPauseBtn.addEventListener('click', function () {

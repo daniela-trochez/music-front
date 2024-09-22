@@ -425,15 +425,28 @@ h1{
       }
 
       /* Estilos generales de cada pista */
-      .track {
-        display: flex; /* Alinear el contenido de cada pista horizontalmente */
-    justify-content: flex-start; /* Asegurar que los elementos estén distribuidos a lo largo */
-    align-items: center; /* Centrar verticalmente los elementos */
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    gap: 20px;
+    .track {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: rgba(44, 44, 44, 0.218);
+      color: #fff;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      min-width: 0; /* Permite que los elementos flexibles se ajusten */
+
+    }
+    /* Estilos del contenedor de la información del audio */
+  .track-info {
+    display: flex;
+    flex-direction: column; /* Para que el título y el álbum estén uno debajo del otro */
     
-      }
+    flex-grow: 1; /* Ocupar el espacio restante entre la imagen y el botón */
+    margin-left: 5px; /* Añade espacio entre la imagen y el texto */
+    min-width: 0; /* Esto evitará que el contenido se desborde */
+  }
 
       /* Elimina el borde inferior de la última pista */
       .track:last-child {
@@ -445,13 +458,14 @@ h1{
         height: 50px;
         width: 50px;
         border-radius: 5px;
+        object-fit: cover;
+        
       }
-      /* Estilos del contenedor de la información del audio */
-.track-info {
+  
+.track-details {
     display: flex;
-    flex-direction: column; /* Para que el título y el álbum estén uno debajo del otro */
-    flex-grow: 1; /* Ocupar el espacio restante entre la imagen y el botón */
-    margin-left: 10px; /* Añade espacio entre la imagen y el texto */
+    gap: 90px; /* Espacio entre el álbumText y el artista */
+    font-size: 0.9rem;
 }
 
       /* Estilos de los divs dentro de cada pista */
@@ -464,32 +478,40 @@ h1{
     text-align: left;
 }
 .track-info h3 {
-    margin-bottom: 15px; /* Espacio entre el título y el nombre del álbum */
-    color: #12001f;
+    margin-bottom: 7px; /* Espacio entre el título y el nombre del álbum */
+    color: #11001d;
     font-weight: bold; /* Si deseas que el texto sea más destacado */
+    font-size: 1.5rem;
+    text-overflow: ellipsis; /* Si el texto es muy largo, agrega puntos suspensivos */
+  
 
 }
 .track-info p {
-    color: #d3d0d4; /* Cambia este color por el que desees */
+    color: #d3d0d4;
+    font-size: 1rem;
+    color: #ccc;
+    margin: 0;
 }
 
 
 
       /* Estilos de los botones dentro de cada pista */
       .track button {
+        font-size: 1.9rem;
         background: none;           /* Sin fondo */
-    border: none;               /* Sin borde */
-    font-size: 30px;            /* Tamaño del ícono */
-    color: black;               /* Color del ícono */
-    cursor: pointer;            /* Manito cuando se pasa el mouse */
-    padding: 10px;              /* Espacio alrededor del ícono */
-    display: flex;              /* Alineación flexible */
-    justify-content: center;    /* Centrar horizontalmente */
-    align-items: center;        /* Centrar verticalmente */
-    width: 50px;                /* Ancho del botón */
-    height: 50px;               /* Altura del botón */
+                     
+        border: none;
+        
+        color: black;               /* Color del ícono */
+        cursor: pointer;            /* Manito cuando se pasa el mouse */
+        padding: 10px;              /* Espacio alrededor del ícono */
+        display: flex;              /* Alineación flexible */
+        justify-content: center;    /* Centrar horizontalmente */
+        align-items: center;        /* Centrar verticalmente */
+        width: 50px;                /* Ancho del botón */
+        height: 50px;               /* Altura del botón */
    
-    margin-right: 80px;  /* Empuja el botón hacia la izquierda */
+        margin-right: 0px;  /* Empuja el botón hacia la izquierda */
     
 
       }
@@ -803,7 +825,7 @@ h1{
               <div class="playhead"></div>
             </div>
             <div>
-              <h2 id="audio-title" style="margin: 0">Clint Eastwood</h2>
+              <h2 id="audio-title" style="margin: 0">Bienvenido y disfruta ♫</h2>
               <p id="audio-artist">Artist</p>
             </div>
             <div class="progress-container">
@@ -1040,10 +1062,10 @@ h1{
         const SKIP_TIME = 10;  // Tiempo en segundos para retroceder o adelantar
 
         // Función para actualizar el reproductor con el nuevo audio
-        function loadAudio(audioUrl, title, artist, image) {
+        function loadAudio(audioUrl, title, description, image) {
             audioPlayer.src = audioUrl; // Establece el audio en el reproductor
             audioTitle.textContent = title; // Cambia el título
-            audioArtist.textContent = artist; 
+            audioArtist.textContent = description; 
             albumImage.src = image; // Cambia la portada del álbum
             audioPlayer.load(); // Carga el nuevo audio
             audioPlayer.play(); // Inicia la reproducción
@@ -1082,9 +1104,10 @@ h1{
                         <img src="${audio.image_file}" alt="${audio.title}" />
                         <div class="track-info">
                             <h3>${audio.title}</h3>
-                            <p>Álbum: ${audio.album ? audio.album.title : 'Sin álbum'}</p> <!-- Mostramos el título del álbum -->
-                            
-                            
+                            <div class="track-details">
+                              <p>Álbum: ${audio.album ? audio.album.title : 'Sin álbum'}</p> <!-- Mostramos el título del álbum -->
+                              <p>Artista: ${audio.description ? audio.description : 'Sin descripción'}</p> <!-- Mostrar el artista -->
+                            </div>  
                         </div>
                         <button>&#9654;</button>
 
@@ -1093,7 +1116,7 @@ h1{
                         // Asociar el botón de reproducción al reproductor
                         const playButton = trackElement.querySelector('button');
                         playButton.addEventListener('click', function () {
-                            loadAudio(audio.audio_file, audio.title, 'Artist', audio.image_file);
+                            loadAudio(audio.audio_file, audio.title, audio.description, audio.image_file);
                         });
 
                         tracksList.appendChild(trackElement);
