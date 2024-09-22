@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Musicoterapia</title>
+    <title>genero_elegido</title>
     <style>
       
       /* Estilos generales para el cuerpo de la pagina */
@@ -189,6 +189,7 @@ h1{
         width: calc(100% - 60px);
         padding: 20px;
         overflow-y: auto;
+        overflow-x: hidden;  /* Evitar el scroll horizontal */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -276,51 +277,11 @@ h1{
         object-fit: cover;
       }
 
-      /* Estilos del punto de reproducción */
-      .playhead {
-        width: 16px;
-        height: 16px;
-        background: #ef77d5;
-        border-radius: 50%;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-      }
 
-      /* Estilos del contenedor de la barra de progreso */
-      .progress-container {
-        width: 100%;
-        margin: 20px auto 0;
-        position: relative;
-      }
+   
 
-      /* Estilos de la barra de progreso */
-      .progress-bar {
-        height: 2px;
-        background: #ccc;
-        width: 100%;
-      }
 
-      /* Estilos del progreso de reproducción */
-      .progress {
-        height: 2px;
-        background: #e87efb;
-        width: 50%;
-        position: absolute;
-        top: 0;
-      }
-
-      /* Estilos del control deslizante de la barra de progreso */
-      .thumb {
-        width: 12px;
-        height: 12px;
-        background: #e87efb;
-        border-radius: 50%;
-        position: absolute;
-        top: -5px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
+  
 
       /* Estilos del tiempo de reproducción */
       .time {
@@ -349,6 +310,14 @@ h1{
         font-size: 24px;
         cursor: pointer;
       }
+      #play-pause-btn {
+    width: 50px;  /* Ancho fijo para evitar el cambio de tamaño */
+    height: 50px; /* Alto fijo */
+    font-size: 24px;  /* Asegurar que los símbolos tengan el mismo tamaño */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
       /* Estilos de las acciones adicionales */
       .actions {
@@ -439,23 +408,31 @@ h1{
 
       /* Estilos del contenedor de pistas */
       .tracks-container {
+        
         width: 45%;
         border: 1px solid #ccc;
         border-radius: 10px;
+
+        transform: translateX(-70px);
         padding: 10px;
         background:transparent;
         overflow-y: auto;
+        
         max-height: 70vh;
+
+
         
       }
 
       /* Estilos generales de cada pista */
       .track {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
+        display: flex; /* Alinear el contenido de cada pista horizontalmente */
+    justify-content: flex-start; /* Asegurar que los elementos estén distribuidos a lo largo */
+    align-items: center; /* Centrar verticalmente los elementos */
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    gap: 20px;
+    
       }
 
       /* Elimina el borde inferior de la última pista */
@@ -469,20 +446,116 @@ h1{
         width: 50px;
         border-radius: 5px;
       }
+      /* Estilos del contenedor de la información del audio */
+.track-info {
+    display: flex;
+    flex-direction: column; /* Para que el título y el álbum estén uno debajo del otro */
+    flex-grow: 1; /* Ocupar el espacio restante entre la imagen y el botón */
+    margin-left: 10px; /* Añade espacio entre la imagen y el texto */
+}
 
       /* Estilos de los divs dentro de cada pista */
       .track div {
         padding: 0 20px;
       }
+      /* Alinear el título y el álbum a la izquierda */
+.track-info h3, .track-info p {
+    margin: 0;
+    text-align: left;
+}
+.track-info h3 {
+    margin-bottom: 15px; /* Espacio entre el título y el nombre del álbum */
+    color: #12001f;
+    font-weight: bold; /* Si deseas que el texto sea más destacado */
+
+}
+.track-info p {
+    color: #d3d0d4; /* Cambia este color por el que desees */
+}
+
+
 
       /* Estilos de los botones dentro de cada pista */
       .track button {
-        background: none;
-        border: none;
-        color: black;
-        font-size: 20px;
-        cursor: pointer;
+        background: none;           /* Sin fondo */
+    border: none;               /* Sin borde */
+    font-size: 30px;            /* Tamaño del ícono */
+    color: black;               /* Color del ícono */
+    cursor: pointer;            /* Manito cuando se pasa el mouse */
+    padding: 10px;              /* Espacio alrededor del ícono */
+    display: flex;              /* Alineación flexible */
+    justify-content: center;    /* Centrar horizontalmente */
+    align-items: center;        /* Centrar verticalmente */
+    width: 50px;                /* Ancho del botón */
+    height: 50px;               /* Altura del botón */
+   
+    margin-right: 80px;  /* Empuja el botón hacia la izquierda */
+    
+
       }
+      .track button:hover {
+    color: #59009A;  /* Cambiar el color del ícono al pasar el mouse */
+}
+
+      /* Estilos para la barra de progreso */
+
+      /* Barra de progreso general */
+#progress-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 11px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #e1bee7 0%, #e1bee7 100%); /* Fondo inicial */
+    outline: none;
+    transition: background 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+/* Parte que ya ha sido reproducida (el thumb no cambia) */
+#progress-bar::-webkit-slider-runnable-track {
+    height: 10px;
+    border-radius: 5px;
+}
+
+/* Estilo para el control deslizante (thumb) */
+#progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #4a2f65;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+#progress-bar::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+#progress-bar::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: #ded8e2;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#progress-bar::-moz-range-track {
+    height: 8px;
+    border-radius: 5px;
+}
+
+/* Cambiar color al arrastrar */
+#progress-bar:active::-webkit-slider-thumb {
+    background: #e1bee7;
+}
+
+
+
+
 
       /* Estilos del pie de página */
         /* Estilos del pie de página */
@@ -630,69 +703,7 @@ h1{
       }
     }
     </style>
-    <script>
-      // Funcion que alterna la visibilidad de un menu desplegable
-      function toggleDropdown(elementId) {
-        const dropdown = document.getElementById(elementId);
-        dropdown.style.display =
-          dropdown.style.display === "block" ? "none" : "block";
-      }
-
-      // Muestra la lista horizontal y oculta el menu desplegable
-      function showHorizontalList() {
-        const dropdown = document.getElementById("dropdown");
-        const horizontalList = document.getElementById("horizontal-list");
-        dropdown.style.display = "none";
-        horizontalList.style.display = "flex";
-      }
-
-      // Copia el link actual al portapapeles
-      function copyLink() {
-        const dummy = document.createElement("textarea");
-        document.body.appendChild(dummy);
-        dummy.value = window.location.href;
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
-        alert("Link copied to clipboard!");
-      }
-
-      // Alterna la visibilidad del menú desplegable anidado
-      function toggleNestedDropdown(elementId) {
-        const nestedDropdown = document.getElementById(elementId);
-        nestedDropdown.style.display =
-          nestedDropdown.style.display === "block" ? "none" : "block";
-      }
-
-      // Cierra todos los menús desplegables si se hace clic fuera de ellos
-      window.onclick = function (event) {
-        if (
-          !event.target.matches(
-            ".dropdown-button, .dropdown-content, .horizontal-list img, .horizontal-list button"
-          )
-        ) {
-          closeDropdownsAndLists();
-        }
-      };
-
-      // Cierra todos los menús desplegables y listas horizontales
-      function closeDropdownsAndLists() {
-        const dropdowns = document.getElementsByClassName("dropdown");
-        for (let i = 0; i < dropdowns.length; i++) {
-          const openDropdown = dropdowns[i];
-          if (openDropdown.style.display === "block") {
-            openDropdown.style.display = "none";
-          }
-        }
-        const horizontalList = document.getElementById("horizontal-list");
-        if (horizontalList.style.display === "flex") {
-          horizontalList.style.display = "none";
-        }
-      }
-      function toggleLike(element) {
-          element.classList.toggle('active');
-        }
-    </script>
+    
   </head>
   <body>
     <header>
@@ -779,35 +790,33 @@ h1{
         <div class="tabs">
           <div class="black" onclick="window.location.href='#pistas'"></div>
           <div class="purple" onclick="window.location.href='#podcast'">
-            Genero Elegido
+            <h1 id="titulo-genero">Género</h1>
           </div>
         </div>
         <div class="content">
+
+
+
           <div class="player">
             <div class="album-cover">
-              <img
-                src="images/El-piano.jpg"
-                alt="Album Art"
-              />
+              <img id="album-image" src="images/El-piano.jpg" alt="genre" />
               <div class="playhead"></div>
             </div>
             <div>
-              <h2 style="margin: 0">Clint Eastwood</h2>
-              <p>Artist</p>
+              <h2 id="audio-title" style="margin: 0">Clint Eastwood</h2>
+              <p id="audio-artist">Artist</p>
             </div>
             <div class="progress-container">
-              <div class="progress-bar"></div>
-              <div class="progress"></div>
-              <div class="thumb"></div>
+              <input type="range" id="progress-bar" value="0" min="0" max="100" step="0.1">
             </div>
             <div class="time">
-              <span>2:36</span>
-              <span>4:20</span>
+              <span id="current-time">0:00</span>
+              <span id="total-duration">0:00</span>
             </div>
             <div class="controls">
-              <button>&#9664;&#9664;</button>
-              <button>&#9654;</button>
-              <button>&#9654;&#9654;</button>
+              <button id="prev-btn">&#9664;&#9664;</button>
+              <button id="play-pause-btn">&#9654;</button>
+              <button id="next-btn">&#9654;&#9654;</button>
             </div>
             <div class="actions">
               <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div></button>
@@ -849,140 +858,14 @@ h1{
 
 
           
-          <div class="tracks-container">
-            <div class="track">
-              <img
-                src="images/Pista1.jpg"
-                alt="Pista 1"
-              />
-              <div>
-                <span>Pista 1</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
-            <div class="track">
-              <img
-                src="images/Pista2.jpg"
-                alt="Pista 2"
-              />
-              <div>
-                <span>Pista 2</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
-            <div class="track">
-              <img
-                src="images/Pista3.png"
-                alt="Pista 3"
-              />
-              <div>
-                <span>Pista 3</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
+          <div class="tracks-container" id="tracks-list">
+             <!-- Los audios se cargarán dinámicamente aquí -->
 
-            <div class="track">
-              <img
-                src="images/Pista4.png"
-                alt="Pista 4"
-              />
-              <div>
-                <span>Pista 4</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
-
-            <div class="track">
-              <img
-                src="images/Pistas5.png"
-                alt="Pista 5"
-              />
-              <div>
-                <span>Pista 5</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
-            <div class="track">
-              <img
-                src="images/pista6.jpg"
-                alt="Pista 6"
-              />
-              <div>
-                <span>Pista 6</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
-            <div class="track">
-              <img
-                src="images/pista7.jpg"
-                alt="Pista 7"
-              />
-              <div>
-                <span>Pista 7</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
-            <div class="track">
-              <img
-                src="images/pista8.jpg"
-                alt="Pista 8"
-              />
-              <div>
-                <span>Pista 8</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
-            <div class="track">
-              <img
-                src="images/pista9.jpg"
-                alt="Pista 9"
-              />
-              <div>
-                <span>Pista 9</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
-            <div class="track">
-              <img
-                src="images/pista10.jpg"
-                alt="Pista 10"
-              />
-              <div>
-                <span>Pista 10</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <button>&#9654;</button>
-            </div>
           </div>
+         
+ 
+
+
         </div>
       </main>
     </div>
@@ -1011,5 +894,269 @@ h1{
             <a class="quienes-somos" href="#">¿Quiénes somos?</a>
         </div>
   </footer>
+
+
+
+  <script>
+
+    const audioPlayer = new Audio(); // Inicializar el reproductor de audio
+
+    // Funcion que alterna la visibilidad de un menu desplegable
+    function toggleDropdown(elementId) {
+      const dropdown = document.getElementById(elementId);
+      dropdown.style.display =
+        dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    // Muestra la lista horizontal y oculta el menu desplegable
+    function showHorizontalList() {
+      const dropdown = document.getElementById("dropdown");
+      const horizontalList = document.getElementById("horizontal-list");
+      dropdown.style.display = "none";
+      horizontalList.style.display = "flex";
+    }
+
+    // Copia el link actual al portapapeles
+    function copyLink() {
+      const dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = window.location.href;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+      alert("Link copied to clipboard!");
+    }
+
+    // Alterna la visibilidad del menú desplegable anidado
+    function toggleNestedDropdown(elementId) {
+      const nestedDropdown = document.getElementById(elementId);
+      nestedDropdown.style.display =
+        nestedDropdown.style.display === "block" ? "none" : "block";
+    }
+
+    // Cierra todos los menús desplegables si se hace clic fuera de ellos
+    window.onclick = function (event) {
+      if (
+        !event.target.matches(
+          ".dropdown-button, .dropdown-content, .horizontal-list img, .horizontal-list button"
+        )
+      ) {
+        closeDropdownsAndLists();
+      }
+    };
+
+    // Cierra todos los menús desplegables y listas horizontales
+    function closeDropdownsAndLists() {
+      const dropdowns = document.getElementsByClassName("dropdown");
+      for (let i = 0; i < dropdowns.length; i++) {
+        const openDropdown = dropdowns[i];
+        if (openDropdown.style.display === "block") {
+          openDropdown.style.display = "none";
+        }
+      }
+      const horizontalList = document.getElementById("horizontal-list");
+      if (horizontalList.style.display === "flex") {
+        horizontalList.style.display = "none";
+      }
+    }
+
+
+    
+    function toggleLike(element) {
+      element.classList.toggle('active');
+
+    // Obtenemos el audio actual que está sonando
+    const audioTitle = document.getElementById('audio-title').textContent;
+    const albumCover = document.getElementById('album-image').src;
+    const audioUrl = audioPlayer ? audioPlayer.src : null;
+
+    if (!audioUrl || audioUrl === "") {
+        console.error('No hay ningún audio actualmente en reproducción.');
+        return;
+    }
+
+    // Crear un objeto con la información del audio
+    const likedAudio = {
+        title: audioTitle,
+        url: audioUrl,
+        albumCover: albumCover
+    };
+
+    // Verificar si ya tenemos audios guardados en el localStorage
+    let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
+
+    // Si el audio ya está en la lista, lo quitamos; si no, lo agregamos
+    const audioExists = likedAudios.find(audio => audio.url === audioUrl);
+
+    if (audioExists) {
+        // Remover el audio de la lista
+        likedAudios = likedAudios.filter(audio => audio.url !== audioUrl);
+        element.classList.remove('active');  // Desactivar el corazón
+    } else {
+        // Agregar el audio a la lista
+        likedAudios.push(likedAudio);
+        element.classList.add('active');  // Activar el corazón
+    }
+
+    // Guardar la lista actualizada en el localStorage
+    localStorage.setItem('likedAudios', JSON.stringify(likedAudios));
+
+    console.log('Estado actualizado del audio:', likedAudio);
+
+
+
+  }
+
+
+  // configurar audios 
+
+          // Función para obtener el parámetro 'genreId' de la URL
+          function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const genreId = getQueryParam('genreId');  // Obtener el ID del género de la URL
+        const apiUrl = `http://tranquilidad.test/v1/genres/${genreId}?included=audios.album`;
+
+        // Variables para el reproductor
+        //const audioPlayer = new Audio(); // Usamos el objeto Audio de JavaScript
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const albumImage = document.getElementById('album-image');
+        const audioTitle = document.getElementById('audio-title');
+        const audioArtist = document.getElementById('audio-artist');
+        const currentTimeElement = document.getElementById('current-time');
+        const totalDurationElement = document.getElementById('total-duration');
+        const tracksList = document.getElementById('tracks-list');
+
+        const SKIP_TIME = 10;  // Tiempo en segundos para retroceder o adelantar
+
+        // Función para actualizar el reproductor con el nuevo audio
+        function loadAudio(audioUrl, title, artist, image) {
+            audioPlayer.src = audioUrl; // Establece el audio en el reproductor
+            audioTitle.textContent = title; // Cambia el título
+            audioArtist.textContent = artist; 
+            albumImage.src = image; // Cambia la portada del álbum
+            audioPlayer.load(); // Carga el nuevo audio
+            audioPlayer.play(); // Inicia la reproducción
+            playPauseBtn.textContent = '❚❚';  // Cambiar a pausa
+
+            // Verificar si el audio está en la lista de "me gusta"
+    let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
+    const audioExists = likedAudios.find(audio => audio.url === audioUrl);
+
+    const likeButton = document.querySelector('.me-gusta');
+
+    // Si el audio está en la lista, ilumina el corazón; si no, lo desilumina
+    if (audioExists) {
+        likeButton.classList.add('active');  // Ilumina el corazón
+    } else {
+        likeButton.classList.remove('active');  // Desilumina el corazón
+    }
+        }
+
+        // Cargar los audios del género seleccionado
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const tituloGenero = document.getElementById('titulo-genero');
+                tituloGenero.textContent = `Audios del género ${data.name}`;  // Cambiar el título al nombre del género
+
+                tracksList.innerHTML = '';  // Limpiamos la lista de audios
+                const audios = data.audios;
+
+                if (audios && audios.length > 0) {
+                    audios.forEach(audio => {
+                        const trackElement = document.createElement('div');
+                        trackElement.classList.add('track');
+
+                        trackElement.innerHTML = `
+                        <img src="${audio.image_file}" alt="${audio.title}" />
+                        <div class="track-info">
+                            <h3>${audio.title}</h3>
+                            <p>Álbum: ${audio.album ? audio.album.title : 'Sin álbum'}</p> <!-- Mostramos el título del álbum -->
+                            
+                            
+                        </div>
+                        <button>&#9654;</button>
+
+                        `;
+
+                        // Asociar el botón de reproducción al reproductor
+                        const playButton = trackElement.querySelector('button');
+                        playButton.addEventListener('click', function () {
+                            loadAudio(audio.audio_file, audio.title, 'Artist', audio.image_file);
+                        });
+
+                        tracksList.appendChild(trackElement);
+                    });
+                } else {
+                    tracksList.innerHTML = '<p>No hay audios disponibles para este género.</p>';
+                }
+            })
+            .catch(error => console.error('Error al cargar los audios:', error));
+
+        // Controlar el botón de play/pausa
+        playPauseBtn.addEventListener('click', function () {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseBtn.innerHTML = '&#10074;&#10074;';  // Cambiar a pausa (❚❚)
+            } else {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '&#9654;';  // Cambiar a play (▶️)
+            }
+        });
+
+        // Asegurar que el audio esté completamente cargado antes de usar su duración
+        audioPlayer.addEventListener('loadedmetadata', function () {
+            totalDurationElement.textContent = formatTime(audioPlayer.duration);
+        });
+
+        // Actualizar el progreso mientras se reproduce
+        audioPlayer.addEventListener('timeupdate', function () {
+            if (!isNaN(audioPlayer.duration)) {
+                const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.value = progressPercentage;
+
+                 // Cambiar el color dinámicamente
+                 progressBar.style.background = `linear-gradient(to right, #59009A ${progressPercentage}%, #e1bee7 ${progressPercentage}%)`;
+
+                // Actualizar el tiempo actual
+                currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
+            }
+           
+        });
+
+        // Permitir que el usuario cambie el progreso al arrastrar la barra
+        progressBar.addEventListener('input', function () {
+            const seekTime = (progressBar.value / 100) * audioPlayer.duration;
+            audioPlayer.currentTime = seekTime;
+        });
+
+        // Adelantar o retroceder dentro de la misma pista
+        nextBtn.addEventListener('click', function () {
+            audioPlayer.currentTime = Math.min(audioPlayer.currentTime + SKIP_TIME, audioPlayer.duration);
+        });
+
+        prevBtn.addEventListener('click', function () {
+            audioPlayer.currentTime = Math.max(audioPlayer.currentTime - SKIP_TIME, 0);
+        });
+
+        // Función para formatear el tiempo en minutos:segundos
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        }
+    });
+
+        
+
+  </script>
+
 </body>
 </html>

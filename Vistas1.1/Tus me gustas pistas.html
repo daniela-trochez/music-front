@@ -494,6 +494,7 @@
           </a>
         </div>
       </aside>
+
       <main class="main-content">
         <div class="title">
           <span>Tus me Gusta</span>
@@ -506,152 +507,14 @@
 
         <div class="content">
           <div class="tracks-container">
-            <div class="track">
-              <img
-                src="img/Pista1.jpg"
-                alt="pista 1"
-              />
-              <div>
-                <span>Pista 1</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
-            <div class="track">
-              <img
-                src="img/pista2.jpg"
-                alt="pista 2"
-              />
-              <div>
-                <span>Pista 2</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
+             <!-- Los audios que te gustan se cargarán dinámicamente aquí -->
 
-            <div class="track">
-              <img
-                src="img/pista3.jpeg"
-                alt="pista 3"
-              />
-              <div>
-                <span>Pista 3</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-              
-            </div>
-
-            <div class="track">
-              <img
-                src="img/pista4.avif"
-                alt="pista 4"
-              />
-              <div>
-                <span>Pista 4</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
-
-            <div class="track">
-              <img
-                src="img/pista5.jpg"
-                alt="pista 5"
-              />
-              <div>
-                <span>Pista 5</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
-            <div class="track">
-              <img
-                src="img/pista6.jpg"
-                alt="pista 6"
-              />
-              <div>
-                <span>Pista 6</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
-            <div class="track">
-              <img
-                src="img/pista7.jpg"
-                alt="pista 7"
-              />
-              <div>
-                <span>Pista 7</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
-            <div class="track">
-              <img
-                src="img/pista8.jpg"
-                alt="pista 8"
-              />
-              <div>
-                <span>Pista 8</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
-            <div class="track">
-              <img
-                src="img/pista9.jpg"
-                alt="pista 9"
-              />
-              <div>
-                <span>Pista 9</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
-            <div class="track">
-              <img
-                src="img/pista10.jpg"
-                alt="pista 10"
-              />
-              <div>
-                <span>Pista 10</span><br />
-                <span>Artista</span>
-              </div>
-              <div>Álbum</div>
-              <div>11/07/2024</div>
-              <div><span class="me-gusta" onclick="toggleLike(this)">❤</span></div>
-              <a href="Reproductor2.html" class="play-button"></a>
-            </div>
           </div>
         </div>
+
+
+
+
       </main>
     </div>
     <footer class="footer">
@@ -679,5 +542,49 @@
         <a class="quienes-somos" href="#">¿Quiénes somos?</a>
     </div>
   </footer>
+
+  <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+
+
+  const likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
+  const tracksContainer = document.querySelector('.tracks-container');
+  
+  tracksContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir las pistas
+
+  likedAudios.forEach(audio => {
+    if (audio) { // Asegúrate de que no sea null
+      const trackElement = document.createElement('div');
+      trackElement.classList.add('track');
+
+      trackElement.innerHTML = `
+        <img src="${audio.albumCover}" alt="${audio.title}" style="width: 50px; height: 50px; border-radius: 5px;">
+        <div class="track-info">
+          <h3>${audio.title}</h3>
+        </div>
+        <button onclick="playAudio('${audio.url}')">&#9654;</button>
+      `;
+
+      tracksContainer.appendChild(trackElement);
+    }
+  });
+});
+
+  
+
+// Función para reproducir el audio desde la vista de favoritos
+function playAudio(url) {
+    const audioPlayer = new Audio(url);
+    audioPlayer.play();
+}
+
+
+
+
+
+
+  </script>
 </body>
 </html>
