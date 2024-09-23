@@ -1114,14 +1114,24 @@ function updateLikedAudiosView() {
     const nextBtn = document.getElementById('next-btn');
     const progressBar = document.getElementById('progress-bar');
     const albumImage = document.getElementById('album-image');
+
+  // Variables globales para el índice actual y la lista de pistas
+    let currentTrackIndex = 0;
+    let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || []; // Obtener los audios guardados
+
+
+
     // Función para cargar el audio en el reproductor
-    function loadAudio(audioUrl, title, cover) {
+    function loadAudio(audioUrl, title, cover, index) {
         audioPlayer.src = audioUrl;
         audioTitle.textContent = title;
         albumImage.src = cover;
         audioPlayer.load();
         audioPlayer.play();
         playPauseBtn.innerHTML = '❚❚';  // Cambiar a pausa
+
+      // Actualizar el índice actual cuando se carga una nueva canción
+        currentTrackIndex = index;
 
 
     // Verificar si el audio está en la lista de "me gusta"
@@ -1137,6 +1147,9 @@ function updateLikedAudiosView() {
         likeButton.classList.remove('active');  // Desilumina el corazón
     }
   }
+
+
+
 
   // Añadir eventos para los botones de play en los audios guardados en 'Tus me gustas'
   document.addEventListener('DOMContentLoaded', function () {
@@ -1157,7 +1170,9 @@ function updateLikedAudiosView() {
     } else {
         likedTracksList.innerHTML = ''; // Limpiar la lista
 
-        likedAudios.forEach(audio => {
+        // Recorrer los audios guardados y crear los elementos correspondientes
+
+        likedAudios.forEach((audio, index) => {
             const trackElement = document.createElement('div');
             trackElement.classList.add('track');
 
@@ -1177,12 +1192,26 @@ function updateLikedAudiosView() {
             // Al hacer clic en el botón, reproducir el audio
             const playButton = trackElement.querySelector('.play-btn');
             playButton.addEventListener('click', function () {
-                loadAudio(audio.url, audio.title, audio.albumCover);
+                loadAudio(audio.url, audio.title, audio.albumCover, index);  // Pasar el índice actual
             });
 
             likedTracksList.appendChild(trackElement);
         });
     }
+
+        // Al terminar una canción, pasar a la siguiente automáticamente
+        audioPlayer.addEventListener('ended', function () {
+        currentTrackIndex++;
+        if (currentTrackIndex < likedAudios.length) {
+            const nextTrack = likedAudios[currentTrackIndex];
+            loadAudio(nextTrack.url, nextTrack.title, nextTrack.albumCover, currentTrackIndex);
+        } else {
+            console.log('Fin de la lista de reproducción');
+            currentTrackIndex = 0;  // Reinicia al inicio de la lista si es necesario
+        }
+    });
+
+    
 
 
 
