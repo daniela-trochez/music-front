@@ -6,45 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LIKE</title>
   <style>
-    /* Estilos generales para el cuerpo de la pagina */
-    body {
-      margin: 0;
-      font-family: "Roboto", sans-serif;
-      display: flex;
-      flex-direction: column;
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: url('images/fondoselegidos.png') no-repeat center center fixed;
       background-size: cover;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
     }
+
 
     /* Estilos del encabezado de la página */
     h1 {
       font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
       color: #59009A;
       font-style: italic;
-    }
-
-
-
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      position: absolute;
-      padding: 0;
-      background-color: #fffcfc;
-      width: 100%;
-      left: 0%;
+      font-size: 2.25rem;
+      /* 36px */
     }
 
     .arriba {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
+      padding: 1.25rem;
+      /* 20px */
       border-bottom: 1px solid #333;
     }
 
@@ -150,8 +137,10 @@
 
     /* Estilos de los elementos del menu de la barra lateral */
     .sidebar .menu-item {
-      padding: 12px;
-      margin: 10px 0;
+      padding: 0.75rem;
+      /* 12px */
+      margin: 0.625rem 0;
+      /* 10px */
       background: #fff;
       border-radius: 15px;
       display: flex;
@@ -179,7 +168,8 @@
     .sidebar .menu-item span {
       flex-grow: 1;
       text-align: center;
-      font-size: 16px;
+      font-size: 1rem;
+      /* 16px */
       display: none;
       text-decoration: none;
       color: #000000;
@@ -222,7 +212,8 @@
       text-align: center;
       position: relative;
       width: 100%;
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
+      /* 20px */
     }
 
     /* Estilos del texto dentro del título */
@@ -309,7 +300,8 @@
       align-items: center;
       width: 100%;
       margin: 10px auto 0;
-      font-size: 12px;
+      font-size: 0.75rem;
+      /* 12px */
     }
 
     /* Estilos de los controles de reproducción */
@@ -508,6 +500,7 @@
     .track-info p {
       color: #d3d0d4;
       /* Cambia este color por el que desees */
+      font-size: 1rem;
     }
 
 
@@ -677,85 +670,62 @@
     }
 
     /* Estilos para pantallas más pequeñas, como tablets o móviles */
-    @media only screen and (max-width: 768px) {
-      .container {
+    @media only screen and (max-width: 1200px) {
+      .content {
         flex-direction: column;
-        height: auto;
-        /* Ajustar altura automática */
-      }
-
-      .sidebar {
-        width: 100%;
-        /* Ocupar todo el ancho disponible */
-        margin-bottom: 20px;
-        /* Espacio entre el sidebar y el contenido principal */
-        padding: 8px 16px;
-      }
-
-
-      .main-content {
-        width: 100%;
-        /* Ocupar todo el ancho disponible */
+        justify-content: center;
+        align-items: center;
 
       }
 
-      .image-container {
-        /* Ajustar el margen izquierdo */
-        margin-left: 0;
-        text-align: left;
-        /* Centrar el contenido */
+      .tracks-container {
+        margin-top: 20px;
+        width: 90%;
+        max-width: 100%;
+        /* Asegurar que ocupe todo el ancho disponible */
+        margin-left: 195px;
+        margin-top: 50px;
+     
+      
 
       }
 
-      .image-container2 {
-        margin-left: 0;
+      .player {
+        width: 90%;
+        /* Asegurar que el reproductor también ocupe todo el ancho */
+        max-width: 100%;
+        /* Asegurar que ocupe todo el ancho disponible */
+      }
+
+
+
+      .footer-container {
+        flex-direction: column;
+        /* Cambia las columnas a filas */
+        align-items: center;
+        /* Alinea los elementos al centro */
+      }
+
+      .contact-item {
         text-align: center;
-        /* Centrar el contenido */
-        width: 100%;
-        /* Ajustar el ancho al 100% */
-        padding: 10px;
-        /* Agregar algo de padding si es necesario */
+        /* Centra el texto de los items */
       }
 
-      .track-list {
-        max-height: none;
-        /* Ajustar altura automática */
-        width: 100%;
-        /* Ajustar el ancho al 100% */
-        padding: 10px;
-        /* Agregar algo de padding si es necesario */
-        box-sizing: border-box;
-        overflow-y: auto;
-        background-size: cover;
-        /* Asegura que la imagen cubra el contenedor sin distorsionarse */
-        background-position: center;
-        /* Centra la imagen de fondo */
-        background-repeat: no-repeat;
-        /* Evita que la imagen se repita */
+      .quienes-somos {
+        margin-left: 0;
+        /* Elimina el margen izquierdo para centrar el enlace en pantallas pequeñas */
+        margin-top: 20px;
+        /* Agrega un poco de espacio superior */
+        align-self: center;
+        /* Centra horizontalmente en el contexto de la columna */
       }
 
-
-      .corner-text {
-        font-size: 1.5em;
-        /* Reducir tamaño de fuente para pantallas pequeñas */
-        top: 10px;
-        left: 10px;
+      .iconos img {
+        margin-right: 0;
+        margin-bottom: 10px;
+        /* Espacio entre los íconos en móviles */
       }
 
-      .bottom-left-text {
-        font-size: 1em;
-        /* Reducir tamaño de fuente para pantallas pequeñas */
-        bottom: 10px;
-        left: 10px;
-      }
-
-      .title {
-        font-size: 35px;
-        /* Reducir el tamaño del título */
-        margin-left: 20px;
-        /* Ajustar el margen izquierdo */
-        text-align: center;
-      }
     }
   </style>
 
@@ -845,9 +815,8 @@
       </div>
       <div class="tabs">
         <div class="black" onclick="window.location.href='#pistas'"></div>
-        <div class="purple" onclick="window.location.href='#podcast'">
-          <h1 id="titulo-genero">Género</h1>
-        </div>
+        <div class="purple" onclick="window.location.href='#podcast'"> </div>
+        <h1 id="titulo-sesion">Me gusta</h1>
       </div>
       <div class="content">
 
