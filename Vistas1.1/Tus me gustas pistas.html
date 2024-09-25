@@ -685,8 +685,8 @@
         /* Asegurar que ocupe todo el ancho disponible */
         margin-left: 195px;
         margin-top: 50px;
-     
-      
+
+
 
       }
 
@@ -1244,11 +1244,6 @@
           currentTrackIndex = 0;  // Reinicia al inicio de la lista si es necesario
         }
       });
-
-
-
-
-
       // Control del botón de play/pause
       playPauseBtn.addEventListener('click', function () {
         if (audioPlayer.paused) {
@@ -1268,19 +1263,19 @@
         totalDurationElement.textContent = formatTime(audioPlayer.duration);
       });
       // // Actualizar el progreso mientras se reproduce
-      // audioPlayer.addEventListener('timeupdate', function () {
-      //     if (!isNaN(audioPlayer.duration)) {
-      //         const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-      //         progressBar.value = progressPercentage;
+      audioPlayer.addEventListener('timeupdate', function () {
+          if (!isNaN(audioPlayer.duration)) {
+              const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+              progressBar.value = progressPercentage;
 
-      //          // Cambiar el color dinámicamente
-      //          progressBar.style.background = `linear-gradient(to right, #59009A ${progressPercentage}%, #e1bee7 ${progressPercentage}%)`;
+               // Cambiar el color dinámicamente
+               progressBar.style.background = `linear-gradient(to right, #59009A ${progressPercentage}%, #e1bee7 ${progressPercentage}%)`;
 
-      //         // Actualizar el tiempo actual
-      //         currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
-      //     }
+              // Actualizar el tiempo actual
+              currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
+          }
 
-      // });
+      });
 
 
       // Permitir que el usuario cambie el progreso al arrastrar la barra
