@@ -982,181 +982,101 @@
     // CORAZON LIKE l
 
 
-    function toggleLike(element) {
-      element.classList.toggle('active');
 
-      // Obtenemos el audio actual que está sonando
-      const audioTitle = document.getElementById('audio-title').textContent;
-      const albumCover = document.getElementById('album-image').src;
-      const audioUrl = audioPlayer ? audioPlayer.src : null;
+    // Definir las variables del reproductor y el contenedor
+    const audioPlayer = new Audio(); // Reproductor de audio
+    const audioTitle = document.getElementById('audio-title');
+    const albumImage = document.getElementById('album-image');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const progressBar = document.getElementById('progress-bar');
+    const likedTracksList = document.getElementById('liked-tracks-list');
+    const likeButton = document.querySelector('.me-gusta'); // Corazón en el reproductor
+    const user_id = 5; // Usuario ficticio, se reemplazará más adelante
 
-      if (!audioUrl || audioUrl === "") {
+    let likedAudios = []; // Mantener los audios "me gusta" cargados
+    let currentTrackIndex = 0; // Índice de la pista actual en la lista de likedAudios
+
+    // Cargar los audios que han sido marcados como "me gusta"
+    function loadLikedAudios() {
+      fetch(`http://tranquilidad.test/v1/likes?user_id=${user_id}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Respuesta de la API de Likes:', data);
+
+          likedAudios = []; // Limpiar la lista de audios "me gusta" antes de recargar
+
+          if (data.length === 0) {
+            likedTracksList.innerHTML = '<p>No hay audios guardados.</p>';
+          } else {
+            likedTracksList.innerHTML = ''; // Limpiar la lista
+
+            data.forEach((like, index) => {
+              // Obtener la información del audio desde la API usando el likeable_id
+              fetch(`http://tranquilidad.test/v1/audios/${like.likeable_id}`)
+                .then(response => {
+                  if (response.status === 404) {
+                    console.warn(`El audio con ID ${like.likeable_id} no fue encontrado. Eliminando like...`);
+                    // Eliminar el like de la base de datos si el audio no existe
+                    return fetch(`http://tranquilidad.test/v1/likes/delete?audio_id=${like.likeable_id}&user_id=${user_id}`, {
+                      method: 'DELETE',
+                      headers: { 'Content-Type': 'application/json' }
+                    });
+                  } else if (!response.ok) {
+                    throw new Error(`Error en la solicitud de audio: ${response.status} - ${response.statusText}`);
+                  }
+                  return response.json();
+                })
+                .then(audio => {
+                  if (audio && audio.audio_file) {
+                    addLikedAudioToView(audio, index); // Agregar el audio a la vista
+                    likedAudios.push(audio); // Agregar el audio a la lista de likedAudios
+                  }
+                })
+                .catch(error => console.error('Error al cargar el audio:', error));
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error al cargar los likes:', error);
+          likedTracksList.innerHTML = `<p>Error al cargar los audios. ${error.message}</p>`;
+        });
+    }
+
+    // Función para agregar el audio a la vista 'Tus me gustas'
+    function addLikedAudioToView(audio, index) {
+      const trackElement = document.createElement('div');
+      trackElement.classList.add('track');
+      trackElement.setAttribute('data-url', audio.audio_file);  // Guardar la URL en un atributo
+
+      trackElement.innerHTML = `
+    <img src="${audio.image_file}" alt="${audio.title}" />
+    <div class="track-info">
+      <h3>${audio.title}</h3>
+      <button class="play-btn">&#9654;</button>
+    </div>
+  `;
+
+      // Asociar el botón de reproducción al reproductor
+      const playButton = trackElement.querySelector('.play-btn');
+      playButton.addEventListener('click', function () {
+        loadAudio(audio.audio_file, audio.title, audio.image_file, index);  // Cargar y reproducir el audio
+      });
+
+      likedTracksList.appendChild(trackElement);
+    }
+
+    // Función para cargar y reproducir el audio
+    function loadAudio(audioUrl, title, cover, index) {
+      if (!audioUrl) {
         console.error('No hay ningún audio actualmente en reproducción.');
         return;
       }
 
-      // Crear un objeto con la información del audio
-      const likedAudio = {
-        title: audioTitle,
-        url: audioUrl,
-        albumCover: albumCover
-      };
-
-      // Verificar si ya tenemos audios guardados en el localStorage
-      let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
-
-      // Si el audio ya está en la lista, lo quitamos; si no, lo agregamos
-      const audioExists = likedAudios.find(audio => audio.url === audioUrl);
-
-      if (audioExists) {
-        // Remover el audio de la lista y del contenedor en la vista 'me gustas'
-        likedAudios = likedAudios.filter(audio => audio.url !== audioUrl);
-        element.classList.remove('active');  // Desactivar el corazón
-        removeAudioFromView(audioUrl);  // Llamar para eliminar del contenedor
-      } else {
-
-        // Agregar el audio a la lista
-        likedAudios.push(likedAudio);
-        element.classList.add('active');  // Activar el corazón
-        addLikedAudioToView(likedAudio);  // Llamar para agregarlo sin duplicación
-
-
-      }
-
-      // Guardar la lista actualizada en el localStorage
-      localStorage.setItem('likedAudios', JSON.stringify(likedAudios));
-
-
-      // Actualizar manualmente la vista después de dar like/dislike
-      updateLikedAudiosView();  // Llamar esta función para actualizar la lista en la misma pestaña
-
-      console.log('Estado actualizado del audio:', likedAudio);
-
-
-    }
-
-    //
-
-
-    // Función para eliminar el audio del contenedor en la vista 'Tus me gustas'
-    function removeAudioFromView(audioUrl) {
-      const likedTracksList = document.getElementById('liked-tracks-list');
-      const trackElements = likedTracksList.querySelectorAll('.track');
-
-      trackElements.forEach(track => {
-        // Verificar si el atributo 'data-url' coincide con el audio a eliminar
-        if (track.getAttribute('data-url') === audioUrl) {
-          likedTracksList.removeChild(track); // Eliminar el contenedor del DOM
-          console.log(`Eliminado del contenedor: ${audioUrl}`);
-        }
-      });
-    }
-
-
-    // Función para agregar el audio a la vista 'Tus me gustas'
-    function addLikedAudioToView(audio) {
-
-      const likedTracksList = document.getElementById('liked-tracks-list');
-
-      // Verificar si el audio ya está en la lista antes de agregarlo
-      const existingTrack = likedTracksList.querySelector(`[data-url="${audio.url}"]`);
-
-      if (!existingTrack) {  // Solo añadir si no existe
-        const trackElement = document.createElement('div');
-        trackElement.classList.add('track');
-        trackElement.setAttribute('data-url', audio.url);  // Guardar la URL en un atributo
-
-        trackElement.innerHTML = `
-        <img src="${audio.albumCover}" alt="${audio.title}" />
-        <div class="track-info">
-            <h3>${audio.title}</h3>
-        </div>
-        <button class="play-btn">&#9654;</button>
-    `;
-
-        // Asociar el botón de reproducción al reproductor
-        const playButton = trackElement.querySelector('.play-btn');
-        playButton.addEventListener('click', function () {
-          loadAudio(audio.url, audio.title, audio.albumCover);
-        });
-
-        likedTracksList.appendChild(trackElement);
-      } else {
-        console.log('El audio ya está en la lista y no se añadirá de nuevo.');
-      }
-
-    }
-
-
-    // se actualiza la lista segun la vista del EXTERIOR
-
-
-    window.addEventListener('storage', function (event) {
-      if (event.key === 'likedAudios') {
-        // Llamar a la función para actualizar la lista de audios
-        updateLikedAudiosView();
-      }
-    });
-
-    function updateLikedAudiosView() {
-      const likedTracksList = document.getElementById('liked-tracks-list');
-      const likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
-
-      if (likedAudios.length === 0) {
-        likedTracksList.innerHTML = '<p>No hay audios guardados.</p>';
-      } else {
-        likedTracksList.innerHTML = ''; // Limpiar la lista
-
-        likedAudios.forEach(audio => {
-          const trackElement = document.createElement('div');
-          trackElement.classList.add('track');
-
-          trackElement.innerHTML = `
-                <img src="${audio.albumCover}" alt="${audio.title}" />
-                <div class="track-info">
-                    <h3>${audio.title}</h3>
-                </div>
-                <button>&#9654;</button>
-            `;
-
-          // Opcional: Reproducir el audio al hacer clic en el botón
-          const playButton = trackElement.querySelector('button');
-          playButton.addEventListener('click', function () {
-            loadAudio(audio.url, audio.title, audio.albumCover);
-          });
-
-          likedTracksList.appendChild(trackElement);
-        });
-      }
-    }
-
-
-
-
-
-
-
-
-
-    // configurar audios LIKE
-
-    // Definir las variables fuera
-    const audioPlayer = new Audio(); // Inicializar el reproductor de audio
-    const audioTitle = document.getElementById('audio-title');
-    const playPauseBtn = document.getElementById('play-pause-btn');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const progressBar = document.getElementById('progress-bar');
-    const albumImage = document.getElementById('album-image');
-
-    // Variables globales para el índice actual y la lista de pistas
-    let currentTrackIndex = 0;
-    let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || []; // Obtener los audios guardados
-
-
-
-    // Función para cargar el audio en el reproductor
-    function loadAudio(audioUrl, title, cover, index) {
       audioPlayer.src = audioUrl;
       audioTitle.textContent = title;
       albumImage.src = cover;
@@ -1164,144 +1084,176 @@
       audioPlayer.play();
       playPauseBtn.innerHTML = '❚❚';  // Cambiar a pausa
 
-      // Actualizar el índice actual cuando se carga una nueva canción
+      // Actualizar el índice actual y el estado del botón de me gusta
       currentTrackIndex = index;
 
+      // Actualizar el estado del botón "me gusta" en el reproductor
+      updateLikeButtonState(audioUrl);
+    }
 
-      // Verificar si el audio está en la lista de "me gusta"
-      let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
-      const audioExists = likedAudios.find(audio => audio.url === audioUrl);
+    // Actualizar el estado del botón "Me gusta" basado en el audio actual
 
-      const likeButton = document.querySelector('.me-gusta');
+    function updateLikeButtonState(audioUrl) {
+      const likeButton = document.querySelector('.me-gusta'); // Seleccionar el botón del reproductor
+      if (!likeButton) return; // Salir si no hay un botón de like
 
-      // Si el audio está en la lista, ilumina el corazón; si no, lo desilumina
-      if (audioExists) {
-        likeButton.classList.add('active');  // Ilumina el corazón
+      // Verificar si el audio está en la lista de likes cargados desde la API
+      const likedAudio = likedAudios.find(audio => audio.audio_file === audioUrl);
+
+      if (likedAudio) {
+        likeButton.classList.add('active');  // Iluminar el corazón
+        likeButton.dataset.likeId = likedAudio.like_id; // Guardar el ID del like en el botón
       } else {
-        likeButton.classList.remove('active');  // Desilumina el corazón
+        likeButton.classList.remove('active');  // Desiluminar el corazón
+        delete likeButton.dataset.likeId; // Eliminar el ID del like del botón
       }
     }
 
+    // Función para alternar el estado de "me gusta"
 
 
+    // Función para alternar el estado de "Me gusta" en el botón del reproductor
+    function toggleLike(element) {
+      const likeButton = element;
+      likeButton.classList.toggle('active');
 
-    // Añadir eventos para los botones de play en los audios guardados en 'Tus me gustas'
-    document.addEventListener('DOMContentLoaded', function () {
-      //const audioPlayer = new Audio();
+      const isLiked = likeButton.classList.contains('active');
+      const audioUrl = audioPlayer.src; // Obtener la URL del audio en reproducción
+      const audioId = likeButton.dataset.audioId || currentTrackIndex; // Obtener el ID del audio actual
+      const userId = 5; // ID ficticio por ahora
 
-
-      const currentTimeElement = document.getElementById('current-time');
-      const totalDurationElement = document.getElementById('total-duration');
-      const likedTracksList = document.getElementById('liked-tracks-list');
-
-      const SKIP_TIME = 10;  // Tiempo en segundos para retroceder o adelantar
-
-      // Obtener los audios guardados en el localStorage
-      const likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
-
-      if (likedAudios.length === 0) {
-        likedTracksList.innerHTML = '<p>No hay audios guardados.</p>';
-      } else {
-        likedTracksList.innerHTML = ''; // Limpiar la lista
-
-        // Recorrer los audios guardados y crear los elementos correspondientes
-
-        likedAudios.forEach((audio, index) => {
-          const trackElement = document.createElement('div');
-          trackElement.classList.add('track');
-
-          trackElement.innerHTML = `
-
-                <img src="${audio.albumCover}" alt="${audio.title}" />
-                <div class="track-info">
-                    <h3>${audio.title}</h3>
-                     
-                    
-                </div>
-                <button class="play-btn">&#9654;</button>
-
-            `;
-          trackElement.setAttribute('data-url', audio.url);  // Guardar la URL en un atributo
-
-          // Al hacer clic en el botón, reproducir el audio
-          const playButton = trackElement.querySelector('.play-btn');
-          playButton.addEventListener('click', function () {
-            loadAudio(audio.url, audio.title, audio.albumCover, index);  // Pasar el índice actual
-          });
-
-          likedTracksList.appendChild(trackElement);
-        });
+      if (!audioUrl) {
+        console.error('No hay ningún audio en reproducción para dar "Me gusta".');
+        return;
       }
 
-      // Al terminar una canción, pasar a la siguiente automáticamente
-      audioPlayer.addEventListener('ended', function () {
-        currentTrackIndex++;
-        if (currentTrackIndex < likedAudios.length) {
-          const nextTrack = likedAudios[currentTrackIndex];
-          loadAudio(nextTrack.url, nextTrack.title, nextTrack.albumCover, currentTrackIndex);
-        } else {
-          console.log('Fin de la lista de reproducción');
-          currentTrackIndex = 0;  // Reinicia al inicio de la lista si es necesario
+      if (isLiked) {
+        // Agregar el "Me gusta"
+        const likeData = {
+          likeable_type: 'App\\Models\\Audio',
+          likeable_id: audioId,
+          user_id: userId
+        };
+
+        fetch('http://tranquilidad.test/v1/likes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(likeData)
+        })
+          .then(response => {
+            if (!response.ok) throw new Error('Error en la solicitud POST.');
+            return response.json();
+          })
+          .then(data => {
+            console.log('Like agregado correctamente:', data);
+            likeButton.dataset.likeId = data.like.id; // Guardar el ID del like en el botón
+          })
+          .catch(error => console.error('Error gestionando el like:', error));
+      } else {
+        // Eliminar el "Me gusta"
+        const likeId = likeButton.dataset.likeId;
+
+        if (!likeId) {
+          console.error('No se encontró el likeId para eliminar el like.');
+          return;
+        }
+
+        fetch(`http://tranquilidad.test/v1/likes/${likeId}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' }
+        })
+          .then(response => {
+            if (!response.ok) throw new Error('Error en la solicitud DELETE.');
+            return response.json();
+          })
+          .then(() => {
+            console.log('Like eliminado correctamente');
+            likeButton.classList.remove('active'); // Desiluminar el corazón
+            delete likeButton.dataset.likeId; // Eliminar el ID del like del botón
+            removeAudioFromView(audioId); // Eliminar el audio de la vista "Tus me gustas"
+          })
+          .catch(error => console.error('Error gestionando el dislike:', error));
+      }
+    }
+
+    // Función para eliminar el audio de la vista "Tus me gustas"
+    function removeAudioFromView(audioId) {
+      const likedTracksList = document.getElementById('liked-tracks-list');
+      const trackElements = likedTracksList.querySelectorAll('.track');
+
+      trackElements.forEach(track => {
+        // Verificar si el atributo 'data-id' coincide con el audio a eliminar
+        if (track.getAttribute('data-id') === String(audioId)) {
+          likedTracksList.removeChild(track); // Eliminar el contenedor del DOM
+          console.log(`Audio eliminado de la vista: ${audioId}`);
         }
       });
-      // Control del botón de play/pause
-      playPauseBtn.addEventListener('click', function () {
-        if (audioPlayer.paused) {
-          audioPlayer.play();
-          playPauseBtn.innerHTML = '❚❚';  // Cambiar a pausa
-        } else {
-          audioPlayer.pause();
-          playPauseBtn.innerHTML = '&#9654;';  // Cambiar a play
-        }
-      });
+    }
 
-      // Actualizar la barra de progreso
-      audioPlayer.addEventListener('timeupdate', function () {
-        const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-        progressBar.value = progressPercentage;
-        currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
-        totalDurationElement.textContent = formatTime(audioPlayer.duration);
-      });
-      // // Actualizar el progreso mientras se reproduce
-      audioPlayer.addEventListener('timeupdate', function () {
-          if (!isNaN(audioPlayer.duration)) {
-              const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-              progressBar.value = progressPercentage;
-
-               // Cambiar el color dinámicamente
-               progressBar.style.background = `linear-gradient(to right, #59009A ${progressPercentage}%, #e1bee7 ${progressPercentage}%)`;
-
-              // Actualizar el tiempo actual
-              currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
+    // Cargar y gestionar la lista de audios "Me gusta"
+    function loadLikedAudios() {
+      const userId = 5; // Usuario ficticio por ahora
+      fetch(`http://tranquilidad.test/v1/likes?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length === 0) {
+            console.log('No hay audios guardados en "Me gusta".');
+            return;
           }
 
-      });
+          likedAudios = []; // Limpiar la lista de likedAudios global
+          data.forEach(like => {
+            const audioId = like.likeable_id;
+            fetch(`http://tranquilidad.test/v1/audios/${audioId}`)
+              .then(response => response.json())
+              .then(audioData => {
+                if (audioData) {
+                  likedAudios.push({
+                    ...audioData,
+                    like_id: like.id // Agregar el ID del like al objeto de audio
+                  });
 
+                  // Llamar a la función para agregar el audio a la vista
+                  addLikedAudioToView(audioData, like.id);
+                }
+              })
+              .catch(error => console.error(`Error al cargar el audio con ID ${audioId}:`, error));
+          });
+        })
+        .catch(error => console.error('Error al cargar los likes:', error));
+    }
 
-      // Permitir que el usuario cambie el progreso al arrastrar la barra
-      progressBar.addEventListener('input', function () {
-        const seekTime = (progressBar.value / 100) * audioPlayer.duration;
-        audioPlayer.currentTime = seekTime;
-      });
+    // Función para agregar un audio a la vista de "Tus me gustas"
+    function addLikedAudioToView(audio, likeId) {
+      const likedTracksList = document.getElementById('liked-tracks-list');
+      const existingTrack = likedTracksList.querySelector(`[data-id="${audio.id}"]`);
 
-      // Adelantar o retroceder dentro de la misma pista
-      nextBtn.addEventListener('click', function () {
-        audioPlayer.currentTime = Math.min(audioPlayer.currentTime + SKIP_TIME, audioPlayer.duration);
-      });
+      if (!existingTrack) {
+        const trackElement = document.createElement('div');
+        trackElement.classList.add('track');
+        trackElement.setAttribute('data-id', audio.id);
 
-      prevBtn.addEventListener('click', function () {
-        audioPlayer.currentTime = Math.max(audioPlayer.currentTime - SKIP_TIME, 0);
-      });
+        trackElement.innerHTML = `
+      <img src="${audio.image_file}" alt="${audio.title}" />
+      <div class="track-info">
+          <h3>${audio.title}</h3>
+          <p>${audio.description}</p>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    `;
 
-      // Formatear el tiempo en minutos y segundos
-      function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        // Asociar el botón de reproducción al reproductor
+        const playButton = trackElement.querySelector('.play-btn');
+        playButton.addEventListener('click', function () {
+          loadAudio(audio.audio_file, audio.title, audio.image_file, audio.id);
+        });
+
+        likedTracksList.appendChild(trackElement);
       }
-    });
+    }
 
-
+    // Ejecutar la carga de audios "Me gusta" al iniciar la vista
+    document.addEventListener('DOMContentLoaded', loadLikedAudios);
 
 
   </script>

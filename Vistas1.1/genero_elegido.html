@@ -1030,81 +1030,6 @@
 
 
 
-
-    // Función para gestionar los like
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // function toggleLike(element) {
-    //   element.classList.toggle('active');
-
-    //   // Obtenemos el audio actual que está sonando
-    //   const audioTitle = document.getElementById('audio-title').textContent;
-    //   const albumCover = document.getElementById('album-image').src;
-    //   const audioUrl = audioPlayer ? audioPlayer.src : null;
-
-    //   if (!audioUrl || audioUrl === "") {
-    //     console.error('No hay ningún audio actualmente en reproducción.');
-    //     return;
-    //   }
-
-    //   // Crear un objeto con la información del audio
-    //   const likedAudio = {
-    //     title: audioTitle,
-    //     url: audioUrl,
-    //     albumCover: albumCover
-    //   };
-
-    //   // Verificar si ya tenemos audios guardados en el localStorage
-    //   let likedAudios = JSON.parse(localStorage.getItem('likedAudios')) || [];
-
-    //   // Si el audio ya está en la lista, lo quitamos; si no, lo agregamos
-    //   const audioExists = likedAudios.find(audio => audio.url === audioUrl);
-
-    //   if (audioExists) {
-    //     // Remover el audio de la lista
-    //     likedAudios = likedAudios.filter(audio => audio.url !== audioUrl);
-    //     element.classList.remove('active');  // Desactivar el corazón
-
-    //   } else {
-    //     // Agregar el audio a la lista
-    //     likedAudios.push(likedAudio);
-    //     element.classList.add('active');  // Activar el corazón
-
-    //   }
-
-    //   // Guardar la lista actualizada en el localStorage
-    //   localStorage.setItem('likedAudios', JSON.stringify(likedAudios));
-
-    //   console.log('Estado actualizado del audio:', likedAudio);
-
-
-
-    // }
-
-
-
-
     // configurar audios 
     let currentTrackId = null;  // Variable global para almacenar el ID de la pista actual
 
@@ -1217,40 +1142,19 @@
         })
         .catch(error => console.error('Error al cargar los audios:', error));
 
-      // Verificar si el audio tiene "like" desde la API
-      // function checkIfLiked(audioUrl) {
-      //   fetch(`http://tranquilidad.test/v1/likes`, {
-      //     method: 'GET',
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     }
-      //   })
-      //     .then(response => response.json())
-      //     .then(data => {
-      //       const likedAudios = data.likes || [];
-
-      //       // Si el audio está en la lista de likes, activar el botón
-      //       const audioExists = likedAudios.find(like => like.audio_url === audioUrl);
-      //       if (audioExists) {
-      //         likeButton.classList.add('active');  // Ilumina el corazón
-      //       } else {
-      //         likeButton.classList.remove('active');  // Desilumina el corazón
-      //       }
-      //     })
-      //     .catch(error => console.error('Error verificando si el audio tiene like:', error));
-      // }
-
-      // Gestionar los likes
 
 
       // Agregar una bandera para evitar múltiples solicitudes simultáneas
 
+
+
       function toggleLike() {
         const isLiked = likeButton.classList.contains('active');  // Verificar si ya está "likeado"
+
         const likeData = {
           likeable_type: 'App\\Models\\Audio',
-          likeable_id: currentTrackId,  // Asegúrate de que este ID sea correcto
-          user_id: 5  // Usuario ficticio
+          likeable_id: currentTrackId,  // ID del audio actual
+          user_id: 5  // Usuario ficticio, cambiar por el ID real del usuario si es necesario
         };
 
         if (!currentTrackId) {
@@ -1263,9 +1167,9 @@
 
         // Si el audio ya tiene un "like", gestionar el dislike
         if (isLiked) {
-          handleDislike();  // Usar el ID del like guardado en el botón
+          handleDislike();  // Llama a handleDislike para eliminar el like
         } else {
-          // Si el audio no tiene like, hacer una solicitud POST para agregarlo
+          // Si no tiene like, hacer la solicitud POST para agregar el like
           fetch('http://tranquilidad.test/v1/likes', {
             method: 'POST',
             headers: {
@@ -1273,63 +1177,51 @@
             },
             body: JSON.stringify(likeData)
           })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Error en la solicitud POST.');
-              }
-              return response.json();
-            })
+
+            .then(response => response.json())
             .then(data => {
               console.log('Like agregado correctamente:', data);
               likeButton.classList.add('active');  // Iluminar el corazón
               likeButton.dataset.likeId = data.like.id;  // Guardar el ID del like en el botón
-              userLikes[currentTrackId] = data.like.id;  // Actualizar el objeto userLikes
+
+              // Llamar a una función para actualizar la vista "Tus me gustas"
+              updateLikedAudiosView();
             })
-            .catch(error => {
-              console.error('Error gestionando el like:', error);
-            })
-            .finally(() => {
-              likeButton.disabled = false;  // Rehabilitar el botón al finalizar la operación
-            });
+            .catch(error => console.error('Error gestionando el like:', error))
+            .finally(() => likeButton.disabled = false);
         }
       }
 
+
       function handleDislike() {
         return fetch(`http://tranquilidad.test/v1/likes/${likeButton.dataset.likeId}`, {
-          method: 'DELETE',  // Enviar una solicitud DELETE
+          method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           }
         })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Error en la solicitud DELETE.');
-            }
-            return response.json();
-          })
+          .then(response => response.json())
           .then(data => {
             console.log('Like eliminado correctamente:', data);
-            likeButton.classList.remove('active');  // Desiluminar el corazón
-            delete likeButton.dataset.likeId;  // Eliminar el ID del like del botón
-            delete userLikes[currentTrackId];  // Actualizar el objeto userLikes
+            likeButton.classList.remove('active');
+            delete likeButton.dataset.likeId;
+
+            // Llamar a una función para actualizar la vista "Tus me gustas"
+            updateLikedAudiosView();
           })
-          .catch(error => {
-            console.error('Error gestionando el dislike:', error);
-          })
-          .finally(() => {
-            likeButton.disabled = false;  // Rehabilitar el botón al finalizar la operación
-          });
+          .catch(error => console.error('Error gestionando el dislike:', error))
+          .finally(() => likeButton.disabled = false);
       }
 
 
       // Asignar el evento click al botón de like
 
-    //  debounce: asegura que si haces clics múltiples muy rápidos, 
-    // solo se ejecute la última acción después del tiempo de espera (delay), 
-    // que en este caso es de 500 milisegundos (medio segundo).
-    // toggleLike: será invocado después de este retardo, evitando la sobrecarga 
-    // del servidor o problemas de duplicación de likes/dislikes cuando el usuario 
-    // interactúa demasiado rápido.
+      //  debounce: asegura que si haces clics múltiples muy rápidos, 
+      // solo se ejecute la última acción después del tiempo de espera (delay), 
+      // que en este caso es de 500 milisegundos (medio segundo).
+      // toggleLike: será invocado después de este retardo, evitando la sobrecarga 
+      // del servidor o problemas de duplicación de likes/dislikes cuando el usuario 
+      // interactúa demasiado rápido.
 
       let debounceTimeout;
       function debounce(func, delay) {
