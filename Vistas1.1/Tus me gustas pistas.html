@@ -988,10 +988,17 @@
     const audioTitle = document.getElementById('audio-title');
     const albumImage = document.getElementById('album-image');
     const playPauseBtn = document.getElementById('play-pause-btn');
+    const prevBtn = document.getElementById('prev-btn'); // Botón de retroceder
+    const nextBtn = document.getElementById('next-btn'); // Botón de adelantar
+    const currentTimeElement = document.getElementById('current-time'); // Elemento que muestra el tiempo actual
+    const totalDurationElement = document.getElementById('total-duration'); // Elemento que muestra la duración total del audio
+
     const progressBar = document.getElementById('progress-bar');
     const likedTracksList = document.getElementById('liked-tracks-list');
     const likeButton = document.querySelector('.me-gusta'); // Corazón en el reproductor
     const user_id = 5; // Usuario ficticio, se reemplazará más adelante
+
+    const SKIP_TIME = 10;  // Tiempo en segundos para retroceder o avanzar
 
     let likedAudios = []; // Mantener los audios "me gusta" cargados
     let currentTrackIndex = 0; // Índice de la pista actual en la lista de likedAudios
@@ -1089,6 +1096,12 @@
 
       // Actualizar el estado del botón "me gusta" en el reproductor
       updateLikeButtonState(audioUrl);
+      // Actualizar la duración total del audio cuando se cargue el archivo
+      audioPlayer.addEventListener('loadedmetadata', function () {
+        totalDurationElement.textContent = formatTime(audioPlayer.duration);
+      });
+      // Actualizar la barra de progreso mientras se reproduce
+      audioPlayer.addEventListener('timeupdate', updateProgressBar);
     }
 
     // Actualizar el estado del botón "Me gusta" basado en el audio actual
@@ -1252,8 +1265,72 @@
       }
     }
 
+
     // Ejecutar la carga de audios "Me gusta" al iniciar la vista
     document.addEventListener('DOMContentLoaded', loadLikedAudios);
+
+
+    // Controlar el botón de play/pausa
+    playPauseBtn.addEventListener('click', function () {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playPauseBtn.innerHTML = '&#10074;&#10074;';  // Cambiar a pausa (❚❚)
+      } else {
+        audioPlayer.pause();
+        playPauseBtn.innerHTML = '&#9654;';  // Cambiar a play (▶️)
+      }
+    });
+
+    // Función para actualizar la barra de progreso y el tiempo actual del reproductor
+    function updateProgressBar() {
+      if (!isNaN(audioPlayer.duration)) {
+        const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.value = progressPercentage;
+
+        // Cambiar el color dinámicamente según el progreso
+        progressBar.style.background = `linear-gradient(to right, #59009A ${progressPercentage}%, #e1bee7 ${progressPercentage}%)`;
+
+        // Actualizar el tiempo actual y la duración total
+        currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
+        totalDurationElement.textContent = formatTime(audioPlayer.duration);
+      }
+    }
+
+    // Permitir que el usuario cambie el progreso al arrastrar la barra
+    progressBar.addEventListener('input', function () {
+      const seekTime = (progressBar.value / 100) * audioPlayer.duration;
+      audioPlayer.currentTime = seekTime;
+    });
+
+    // Función para avanzar la pista en 10 segundos
+    nextBtn.addEventListener('click', function () {
+      audioPlayer.currentTime = Math.min(audioPlayer.currentTime + SKIP_TIME, audioPlayer.duration);
+    });
+
+    // Función para retroceder la pista en 10 segundos
+    prevBtn.addEventListener('click', function () {
+      audioPlayer.currentTime = Math.max(audioPlayer.currentTime - SKIP_TIME, 0);
+    });
+
+    // Función para formatear el tiempo en minutos y segundos
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+    // Al terminar una canción, pasar a la siguiente automáticamente
+audioPlayer.addEventListener('ended', function () {
+  currentTrackIndex++;
+  if (currentTrackIndex < likedAudios.length) {
+    const nextTrack = likedAudios[currentTrackIndex];
+    loadAudio(nextTrack.audio_file, nextTrack.title, nextTrack.image_file, currentTrackIndex);
+  } else {
+    console.log('Fin de la lista de reproducción');
+    currentTrackIndex = 0;  // Reinicia al inicio de la lista si es necesario
+  }
+});
+
+
 
 
   </script>
