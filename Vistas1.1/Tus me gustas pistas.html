@@ -1004,55 +1004,6 @@
     let currentTrackIndex = 0; // Índice de la pista actual en la lista de likedAudios
 
     // Cargar los audios que han sido marcados como "me gusta"
-    function loadLikedAudios() {
-      fetch(`http://tranquilidad.test/v1/likes?user_id=${user_id}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Respuesta de la API de Likes:', data);
-
-          likedAudios = []; // Limpiar la lista de audios "me gusta" antes de recargar
-
-          if (data.length === 0) {
-            likedTracksList.innerHTML = '<p>No hay audios guardados.</p>';
-          } else {
-            likedTracksList.innerHTML = ''; // Limpiar la lista
-
-            data.forEach((like, index) => {
-              // Obtener la información del audio desde la API usando el likeable_id
-              fetch(`http://tranquilidad.test/v1/audios/${like.likeable_id}`)
-                .then(response => {
-                  if (response.status === 404) {
-                    console.warn(`El audio con ID ${like.likeable_id} no fue encontrado. Eliminando like...`);
-                    // Eliminar el like de la base de datos si el audio no existe
-                    return fetch(`http://tranquilidad.test/v1/likes/delete?audio_id=${like.likeable_id}&user_id=${user_id}`, {
-                      method: 'DELETE',
-                      headers: { 'Content-Type': 'application/json' }
-                    });
-                  } else if (!response.ok) {
-                    throw new Error(`Error en la solicitud de audio: ${response.status} - ${response.statusText}`);
-                  }
-                  return response.json();
-                })
-                .then(audio => {
-                  if (audio && audio.audio_file) {
-                    addLikedAudioToView(audio, index); // Agregar el audio a la vista
-                    likedAudios.push(audio); // Agregar el audio a la lista de likedAudios
-                  }
-                })
-                .catch(error => console.error('Error al cargar el audio:', error));
-            });
-          }
-        })
-        .catch(error => {
-          console.error('Error al cargar los likes:', error);
-          likedTracksList.innerHTML = `<p>Error al cargar los audios. ${error.message}</p>`;
-        });
-    }
 
 
 
@@ -1072,6 +1023,7 @@
 
       // Actualizar el índice actual y el estado del botón de me gusta
       currentTrackIndex = index;
+      console.log(`Reproduciendo: ${title} en índice: ${currentTrackIndex}`);
 
       // Actualizar el estado del botón "me gusta" en el reproductor
       updateLikeButtonState(audioUrl);
@@ -1206,7 +1158,7 @@
                   });
 
                   // Llamar a la función para agregar el audio a la vista
-                  addLikedAudioToView(audioData, like.id);
+                  addLikedAudioToView(audioData, likedAudios.length - 1); // Índice basado en la longitud actual de la lista
                 }
               })
               .catch(error => console.error(`Error al cargar el audio con ID ${audioId}:`, error));
@@ -1215,8 +1167,11 @@
         .catch(error => console.error('Error al cargar los likes:', error));
     }
 
+    // Ejecutar la carga de audios "Me gusta" al iniciar la vista
+    document.addEventListener('DOMContentLoaded', loadLikedAudios);
+
     // Función para agregar un audio a la vista de "Tus me gustas"
-    function addLikedAudioToView(audio, likeId) {
+    function addLikedAudioToView(audio, index) {
       const likedTracksList = document.getElementById('liked-tracks-list');
       const existingTrack = likedTracksList.querySelector(`[data-id="${audio.id}"]`);
 
@@ -1237,7 +1192,13 @@
         // Asociar el botón de reproducción al reproductor
         const playButton = trackElement.querySelector('.play-btn');
         playButton.addEventListener('click', function () {
-          loadAudio(audio.audio_file, audio.title, audio.image_file, audio.id);
+          // Obtener el índice del audio en `likedAudios` utilizando el ID del audio
+          const trackIndex = likedAudios.findIndex(a => a.id === audio.id);
+          if (trackIndex !== -1) { // Si se encontró el índice, reproducir
+            loadAudio(audio.audio_file, audio.title, audio.image_file, trackIndex);
+          } else {
+            console.error('No se encontró el índice del audio en likedAudios.');
+          }
         });
 
         likedTracksList.appendChild(trackElement);
@@ -1245,8 +1206,7 @@
     }
 
 
-    // Ejecutar la carga de audios "Me gusta" al iniciar la vista
-    document.addEventListener('DOMContentLoaded', loadLikedAudios);
+
 
 
     // Controlar el botón de play/pausa
@@ -1297,18 +1257,20 @@
       const remainingSeconds = Math.floor(seconds % 60);
       return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
     }
-    // Al terminar una canción, pasar a la siguiente automáticamente
-audioPlayer.addEventListener('ended', function () {
-  currentTrackIndex++;
-  if (currentTrackIndex < likedAudios.length) {
-    const nextTrack = likedAudios[currentTrackIndex];
-    loadAudio(nextTrack.audio_file, nextTrack.title, nextTrack.image_file, currentTrackIndex);
-  } else {
-    console.log('Fin de la lista de reproducción');
-    currentTrackIndex = 0;  // Reinicia al inicio de la lista si es necesario
-  }
-});
+    // Al terminar la pista, pasar a la siguiente automáticamente
+    audioPlayer.addEventListener('ended', function () {
+      console.log(`Pista actual (índice): ${currentTrackIndex}, Total de pistas: ${likedAudios.length}`);
 
+      // Verificar si hay más pistas en la lista para reproducir
+      if (currentTrackIndex + 1 < likedAudios.length) {
+        currentTrackIndex++; // Incrementar el índice para la siguiente pista
+        const nextTrack = likedAudios[currentTrackIndex];
+        console.log(`Reproduciendo la siguiente pista: ${nextTrack.title} (Índice: ${currentTrackIndex})`);
+        loadAudio(nextTrack.audio_file, nextTrack.title, nextTrack.image_file, currentTrackIndex);
+      } else {
+        console.warn('Fin de la lista de reproducción. No hay más pistas para reproducir.');
+      }
+    });
 
 
 
