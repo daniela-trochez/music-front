@@ -1054,28 +1054,7 @@
         });
     }
 
-    // Función para agregar el audio a la vista 'Tus me gustas'
-    function addLikedAudioToView(audio, index) {
-      const trackElement = document.createElement('div');
-      trackElement.classList.add('track');
-      trackElement.setAttribute('data-url', audio.audio_file);  // Guardar la URL en un atributo
 
-      trackElement.innerHTML = `
-    <img src="${audio.image_file}" alt="${audio.title}" />
-    <div class="track-info">
-      <h3>${audio.title}</h3>
-      <button class="play-btn">&#9654;</button>
-    </div>
-  `;
-
-      // Asociar el botón de reproducción al reproductor
-      const playButton = trackElement.querySelector('.play-btn');
-      playButton.addEventListener('click', function () {
-        loadAudio(audio.audio_file, audio.title, audio.image_file, index);  // Cargar y reproducir el audio
-      });
-
-      likedTracksList.appendChild(trackElement);
-    }
 
     // Función para cargar y reproducir el audio
     function loadAudio(audioUrl, title, cover, index) {
