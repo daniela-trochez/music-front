@@ -996,7 +996,6 @@
     const progressBar = document.getElementById('progress-bar');
     const likedTracksList = document.getElementById('liked-tracks-list');
     const likeButton = document.querySelector('.me-gusta'); // Corazón en el reproductor
-    const user_id = 5; // Usuario ficticio, se reemplazará más adelante
 
     const SKIP_TIME = 10;  // Tiempo en segundos para retroceder o avanzar
 
@@ -1047,9 +1046,13 @@
       if (likedAudio) {
         likeButton.classList.add('active');  // Iluminar el corazón
         likeButton.dataset.likeId = likedAudio.like_id; // Guardar el ID del like en el botón
+        likeButton.dataset.audioId = likedAudio.id; // Guardar el ID del audio en el botón
+
       } else {
         likeButton.classList.remove('active');  // Desiluminar el corazón
         delete likeButton.dataset.likeId; // Eliminar el ID del like del botón
+        delete likeButton.dataset.audioId; // Eliminar el ID del audio del botón
+
       }
     }
 
@@ -1057,66 +1060,66 @@
 
 
     // Función para alternar el estado de "Me gusta" en el botón del reproductor
-    function toggleLike(element) {
+    async function toggleLike(element) {
       const likeButton = element;
       likeButton.classList.toggle('active');
 
       const isLiked = likeButton.classList.contains('active');
       const audioUrl = audioPlayer.src; // Obtener la URL del audio en reproducción
-      const audioId = likeButton.dataset.audioId || currentTrackIndex; // Obtener el ID del audio actual
+      const audio = likedAudios[currentTrackIndex]; // Obtener el audio actual en la lista de `likedAudios`
+      const audioId = audio ? audio.id : likeButton.dataset.audioId; // Usar el ID del audio desde `likedAudios` o `dataset`
       const userId = 5; // ID ficticio por ahora
 
-      if (!audioUrl) {
-        console.error('No hay ningún audio en reproducción para dar "Me gusta".');
+      if (!audioUrl || !audioId || isNaN(audioId)) {
+        console.error('No hay ningún audio en reproducción o ID de audio inválido para dar "Me gusta".');
         return;
       }
 
-      if (isLiked) {
-        // Agregar el "Me gusta"
-        const likeData = {
-          likeable_type: 'App\\Models\\Audio',
-          likeable_id: audioId,
-          user_id: userId
-        };
+      try {
+        if (isLiked) {
+          const likeData = {
+            likeable_type: 'App\\Models\\Audio',
+            likeable_id: audioId, // Usar el ID real del audio, no el índice
+            user_id: userId
+          };
 
-        fetch('http://tranquilidad.test/v1/likes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(likeData)
-        })
-          .then(response => {
-            if (!response.ok) throw new Error('Error en la solicitud POST.');
-            return response.json();
-          })
-          .then(data => {
-            console.log('Like agregado correctamente:', data);
-            likeButton.dataset.likeId = data.like.id; // Guardar el ID del like en el botón
-          })
-          .catch(error => console.error('Error gestionando el like:', error));
-      } else {
-        // Eliminar el "Me gusta"
-        const likeId = likeButton.dataset.likeId;
+          const response = await fetch('http://tranquilidad.test/v1/likes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(likeData)
+          });
 
-        if (!likeId) {
-          console.error('No se encontró el likeId para eliminar el like.');
-          return;
+          if (!response.ok) throw new Error(`Error en la solicitud POST. Status: ${response.status}`);
+          const data = await response.json();
+
+          console.log('Like agregado correctamente:', data);
+          likeButton.dataset.likeId = data.like.id; // Guardar el ID del like en el botón
+          likeButton.dataset.audioId = audioId; // Mantener el ID del audio en el dataset del botón
+
+        } else {
+          // Eliminar el "Me gusta"
+          const likeId = likeButton.dataset.likeId;
+
+          if (!likeId) {
+            console.error('No se encontró el likeId para eliminar el like.');
+            return;
+          }
+
+          const response = await fetch(`http://tranquilidad.test/v1/likes/${likeId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+          });
+
+          if (!response.ok) throw new Error(`Error en la solicitud DELETE. Status: ${response.status}`);
+
+          console.log('Like eliminado correctamente');
+          likeButton.classList.remove('active'); // Desiluminar el corazón
+          delete likeButton.dataset.likeId; // Eliminar el ID del like del botón
+          removeAudioFromView(audioId); // Eliminar el audio de la vista "Tus me gustas"
+          removeAudioFromList(audioId); // Eliminar el audio de `likedAudios`
         }
-
-        fetch(`http://tranquilidad.test/v1/likes/${likeId}`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' }
-        })
-          .then(response => {
-            if (!response.ok) throw new Error('Error en la solicitud DELETE.');
-            return response.json();
-          })
-          .then(() => {
-            console.log('Like eliminado correctamente');
-            likeButton.classList.remove('active'); // Desiluminar el corazón
-            delete likeButton.dataset.likeId; // Eliminar el ID del like del botón
-            removeAudioFromView(audioId); // Eliminar el audio de la vista "Tus me gustas"
-          })
-          .catch(error => console.error('Error gestionando el dislike:', error));
+      } catch (error) {
+        console.error('Error gestionando el like:', error);
       }
     }
 
@@ -1132,6 +1135,22 @@
           console.log(`Audio eliminado de la vista: ${audioId}`);
         }
       });
+    }
+
+
+    // Función para eliminar el audio de la lista `likedAudios`
+    function removeAudioFromList(audioId) {
+      const index = likedAudios.findIndex(audio => audio.id === audioId);
+      if (index !== -1) {
+        likedAudios.splice(index, 1); // Eliminar el audio de la lista
+        console.log(`Audio eliminado de la lista: ${audioId}. Índice: ${index}`);
+
+        // Ajustar el índice de la pista actual si es necesario
+        if (index <= currentTrackIndex && currentTrackIndex > 0) {
+          currentTrackIndex--; // Ajustar el índice si el audio eliminado estaba antes de la pista actual
+        }
+        console.log(`Nuevo índice de pista actual: ${currentTrackIndex}`);
+      }
     }
 
     // Cargar y gestionar la lista de audios "Me gusta"
