@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,220 +13,230 @@
         .imagen-footer:hover,
         .title:hover span,
         .nav a:hover {
-            transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
+            transform: scale(1.1);
+            /* Aumenta el tamaño al pasar el cursor */
         }
+
         /* Fin de estilos adicionales para la interacción */
 
-        .imagen-usuario {
-            width: 30px;
-            height: 30px;
+
+
+        footer {
+            background-color: #59009A;
+            color: #ffffff;
+            padding: 10px;
         }
 
-        .body {
+        .footer-container {
+            display: flex;
+            padding: 0;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            padding-left: 10px;
+            padding-right: 10px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .contact-item span {
+            margin-bottom: 5px;
+        }
+
+        .iconos {
+            display: flex;
+            justify-content: center;
+        }
+
+        .iconos a {
+            margin: 0 10px;
+        }
+
+        .iconos img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .quienes-somos {
+            align-self: center;
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: auto;
+        }
+
+        h1 {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color: #59009A;
+            font-style: italic;
+        }
+
+
+        h1 {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color: #59009A;
+            font-style: italic;
+        }
+
+
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            position: absolute;
+            padding: 0;
+            background-color: #fffcfc;
+            width: 100%;
+            left: 0%;
+        }
+
+        .arriba {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            margin: 0;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            margin: 0px;
+        }
+
+        .user a {
+            margin-right: 20px;
+            color: #59009A;
+            text-decoration: none;
+
+            margin-inline-start: auto;
+        }
+
+        .user img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .nav {
+            color: #59009A;
+            position: relative;
+            margin-left: 880px;
+            display: inline-block; /* Asegura que el área de hover sea adecuada */
+
+
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+            top: 100%;
+            left: 0px;
+            width: auto;
+            z-index: 1;
+        }
+
+        /* Mostrar el submenú cuando el mouse está sobre la nav o el submenu */
+        .nav:hover .submenu,
+        .submenu:hover {
+            display: block;
+            /* Muestra el submenú */
+        }
+
+        .submenu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .submenu li {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .submenu li:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Estilos del contenedor principal */
+        .container {
+            display: flex;
+            height: calc(100vh - 126px);
+        }
+
+        /* Estilos de la barra lateral */
+        .sidebar {
+            width: 25%;
+            background-color: #c7b7fe49;
             padding: 20px;
         }
 
-        footer {
-    background-color: #59009A;
-    color: #ffffff;
-    padding: 10px;
-}
+        /* Estilos de los elementos del menu en la barra lateral */
+        .sidebar .menu-item {
+            padding: 12px;
+            margin: 10px 0;
+            background: #fff;
+            border-radius: 15px;
+            transition: background 0.3s ease;
+        }
 
-.footer-container {
-    display: flex;
-    padding: 0;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-}
+        /* Estilos de los elementos del menú cuando están activos o al pasar el ratón */
+        .sidebar .menu-item.active,
+        .sidebar .menu-item:hover {
+            background: linear-gradient(#ffffff, #9c76c1);
+            box-shadow: 1px 5px 10px 0.1px rgb(145, 145, 145);
+        }
 
-.contact-item {
-    display: flex;
-    flex-direction: column;
-    padding-left: 10px;
-    padding-right: 10px;
-    align-items: center;
-    text-align: center;
-}
+        /* Estilos de las imágenes dentro de los elementos del menú */
+        .sidebar .menu-item img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
 
-.contact-item span {
-    margin-bottom: 5px;
-}
+        /* Estilos de los enlaces dentro de los elementos del menú */
+        .sidebar .menu-item a {
+            display: flex;
+            align-items: center;
+            color: inherit;
+            text-decoration: none;
+            justify-content: center;
+        }
 
-.iconos {
-    display: flex;
-    justify-content: center;
-}
-
-.iconos a {
-    margin: 0 10px;
-}
-
-.iconos img {
-    width: 24px;
-    height: 24px;
-}
-
-.quienes-somos {
-    align-self: center;
-    color: #ffffff;
-    text-decoration: none;
-    margin-left: auto;
-}
-h1{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: #59009A;
-    font-style: italic;
-  }
-  
-  
-  h1{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: #59009A;
-    font-style: italic;
-  }
-  
- 
-  
-  body {
-    font-family: sans-serif;
-    margin: 0;
-    position: absolute;
-    padding: 0;
-    background-color: #fffcfc;
-    width: 100%;
-    left: 0%;
-  }
-  
-  .arriba {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      border-bottom: 1px solid #333;
-  }
-  .logo {
-      display: flex;
-      align-items: center;
-  }
-  .logo img {
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-  }
-  .logo h1 {
-      margin: 0;
-  }
-  .user {
-      display: flex;
-      align-items: center;
-      margin: 0px;
-  }
-  .user a {
-      margin-right: 20px;
-      color: #59009A;
-      text-decoration: none;
-    
-      margin-inline-start: auto;
-  }
-  .user img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-  }
-  .nav {
-    color: #59009A;
-    position: relative;
-    margin-left: 880px;
-    
-    }
-    
-    .submenu {
-    position: absolute;
-    background-color: #fff;
-    padding: 5px 5px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    display: none;
-    top: 24px;
-    left: 0px;
-    width: auto;
-    }
-    
-    .nav:hover .submenu {
-    display: flex;
-    }
-    
-    .submenu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    }
-    
-    .submenu li {
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    }
-    
-    .submenu li:hover {
-    background-color: #f0f0f0;
-    }
-        
-      /* Estilos del contenedor principal */
-      .container {
-        display: flex;
-        height: calc(100vh - 126px);
-      }
-
-      /* Estilos de la barra lateral */
-      .sidebar {
-        width: 25%;
-        background-color: #c7b7fe49;
-        padding: 20px;
-      }
-
-      /* Estilos de los elementos del menu en la barra lateral */
-      .sidebar .menu-item {
-        padding: 12px;
-        margin: 10px 0;
-        background: #fff;
-        border-radius: 15px;
-        transition: background 0.3s ease;
-      }
-
-      /* Estilos de los elementos del menú cuando están activos o al pasar el ratón */
-      .sidebar .menu-item.active,
-      .sidebar .menu-item:hover {
-        background: linear-gradient(#ffffff, #9c76c1);
-        box-shadow: 1px 5px 10px 0.1px rgb(145, 145, 145);
-      }
-
-      /* Estilos de las imágenes dentro de los elementos del menú */
-      .sidebar .menu-item img {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-      }
-
-      /* Estilos de los enlaces dentro de los elementos del menú */
-      .sidebar .menu-item a {
-        display: flex;
-        align-items: center;
-        color: inherit;
-        text-decoration: none;
-        justify-content: center;
-      }
-
-      /* Estilos del texto dentro de los elementos del menú */
-      .sidebar .menu-item span {
-        flex-grow: 1;
-        text-align: center;
-        font-size: 16px;
-      }
-      
+        /* Estilos del texto dentro de los elementos del menú */
+        .sidebar .menu-item span {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 16px;
+        }
 
 
-      /* Estilos del contenido principal */
+
+        /* Estilos del contenido principal */
 
         .main-content {
             width: 75%;
@@ -234,14 +245,15 @@ h1{
         }
 
         .title {
-            margin-right: 50px;
             display: flex;
+            justify-content: center;
+            /* Centra horizontalmente */
             align-items: center;
+            /* Centra verticalmente */
             font-size: 75px;
             margin-bottom: 20px;
-            position: relative;
-            margin-left: 360px;
-            font-family: 'Roboto Slab', serif; /* Añadido para la fuente del título */
+            font-family: 'Roboto Slab', serif;
+
         }
 
         .title span {
@@ -254,7 +266,8 @@ h1{
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-            font-family: 'Roboto', sans-serif; /* Fuente Roboto para el contenedor de géneros */
+            font-family: 'Roboto', sans-serif;
+            /* Fuente Roboto para el contenedor de géneros */
         }
 
         .genre {
@@ -264,152 +277,262 @@ h1{
 
         .genre h3 {
             margin-bottom: 10px;
-            font-family: 'Roboto Slab', serif; /* Fuente Roboto Slab para los títulos */
-            transition: color 0.3s; /* Agrega una transición de color al pasar el cursor sobre el título */
+            font-family: 'Roboto Slab', serif;
+            /* Fuente Roboto Slab para los títulos */
+            transition: color 0.3s;
+            /* Agrega una transición de color al pasar el cursor sobre el título */
         }
 
         .genre:hover h3 {
-            color: #59009A; /* Cambia el color del título al pasar el cursor */
+            color: #59009A;
+            /* Cambia el color del título al pasar el cursor */
         }
 
         .genre img {
-         width: 60%; /* Aumenta el ancho a 90% */
-         height: 230px; /* Define un alto específico */
-         border-radius: 10px;
-         transition: transform 0.3s; /* Agrega una transición para suavizar el cambio */
-            }
+            width: 60%;
+            /* Aumenta el ancho a 90% */
+            height: 230px;
+            /* Define un alto específico */
+            border-radius: 10px;
+            transition: transform 0.3s;
+            /* Agrega una transición para suavizar el cambio */
+            object-fit: cover;
+        }
 
         .genre:hover img {
-            transform: scale(1.1); /* Aumenta el tamaño de la imagen al pasar el cursor */
+            transform: scale(1.1);
+            /* Aumenta el tamaño de la imagen al pasar el cursor */
         }
-        .genres a {
-    color: inherit; /* Inherits the color from parent elements */
-    text-decoration: none; /* Removes the underline */
-}
 
-.genres a:hover {
-    color: #59009A; /* Optional: Change color on hover for visual feedback */
-}
-        
+        .genres a {
+            color: inherit;
+            /* Inherits the color from parent elements */
+            text-decoration: none;
+            /* Removes the underline */
+        }
+
+        .genres a:hover {
+            color: #59009A;
+            /* Optional: Change color on hover for visual feedback */
+        }
+
 
         /* Estilo para el título Álbum */
         .main-content .title span {
-            font-family: 'Roboto', sans-serif; /* Cambia la fuente a Roboto */
+            font-family: 'Roboto', sans-serif;
+            /* Cambia la fuente a Roboto */
         }
-        
-
-               
-    /* Estilos para pantallas más pequeñas, como tablets o móviles */
-    @media only screen and (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        height: auto;
-        /* Ajustar altura automática */
-      }
-
-      .sidebar {
-        width: 100%;
-        /* Ocupar todo el ancho disponible */
-        margin-bottom: 20px;
-        /* Espacio entre el sidebar y el contenido principal */
-        padding: 8px 16px;
-      }
 
 
-      .main-content {
-        width: 100%;
-        /* Ocupar todo el ancho disponible */
 
-      }
+        /* Estilos para pantallas más pequeñas, como tablets o móviles */
+        @media only screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                /* Ajustar altura automática */
+            }
 
-      .image-container {
-        /* Ajustar el margen izquierdo */
-        margin-left: 0;
-        text-align: left;
-        /* Centrar el contenido */
-
-      }
-
-      .image-container2 {
-        margin-left: 0;
-        text-align: center;
-        /* Centrar el contenido */
-        width: 100%;
-        /* Ajustar el ancho al 100% */
-        padding: 10px;
-        /* Agregar algo de padding si es necesario */
-      }
-
-      .track-list {
-        max-height: none;
-        /* Ajustar altura automática */
-        width: 100%;
-        /* Ajustar el ancho al 100% */
-        padding: 10px;
-        /* Agregar algo de padding si es necesario */
-        box-sizing: border-box;
-        overflow-y: auto;
-        background-size: cover;
-        /* Asegura que la imagen cubra el contenedor sin distorsionarse */
-        background-position: center;
-        /* Centra la imagen de fondo */
-        background-repeat: no-repeat;
-        /* Evita que la imagen se repita */
-      }
+            .sidebar {
+                width: 95%;
+                /* Ocupar todo el ancho disponible */
+                margin-bottom: 20px;
+                /* Espacio entre el sidebar y el contenido principal */
+                padding: 8px 16px;
+            }
 
 
-      .corner-text {
-        font-size: 1.5em;
-        /* Reducir tamaño de fuente para pantallas pequeñas */
-        top: 10px;
-        left: 10px;
-      }
+            .main-content {
+                width: 100%;
+                /* Ocupar todo el ancho disponible */
 
-      .bottom-left-text {
-        font-size: 1em;
-        /* Reducir tamaño de fuente para pantallas pequeñas */
-        bottom: 10px;
-        left: 10px;
-      }
+            }
 
-      .title {
-        font-size: 35px;
-        /* Reducir el tamaño del título */
-        margin-left: 20px;
-        /* Ajustar el margen izquierdo */
-        text-align: center;
-      }
-    }
+            .image-container {
+                /* Ajustar el margen izquierdo */
+                margin-left: 0;
+                text-align: left;
+                /* Centrar el contenido */
 
-        
-        
+            }
+
+            .image-container2 {
+                margin-left: 0;
+                text-align: center;
+                /* Centrar el contenido */
+                width: 100%;
+                /* Ajustar el ancho al 100% */
+                padding: 10px;
+                /* Agregar algo de padding si es necesario */
+            }
+
+            .track-list {
+                max-height: none;
+                /* Ajustar altura automática */
+                width: 100%;
+                /* Ajustar el ancho al 100% */
+                padding: 10px;
+                /* Agregar algo de padding si es necesario */
+                box-sizing: border-box;
+                overflow-y: auto;
+                background-size: cover;
+                /* Asegura que la imagen cubra el contenedor sin distorsionarse */
+                background-position: center;
+                /* Centra la imagen de fondo */
+                background-repeat: no-repeat;
+                /* Evita que la imagen se repita */
+            }
+
+
+            .corner-text {
+                font-size: 1.5em;
+                /* Reducir tamaño de fuente para pantallas pequeñas */
+                top: 10px;
+                left: 10px;
+            }
+
+            .bottom-left-text {
+                font-size: 1em;
+                /* Reducir tamaño de fuente para pantallas pequeñas */
+                bottom: 10px;
+                left: 10px;
+            }
+
+            .title {
+                font-size: 55px;
+                /* Cambiar el tamaño del texto para pantallas pequeñas */
+                margin: 20px;
+                width: 100%;
+                /* Asegúrate de que ocupe el ancho completo */
+                text-align: center;
+                /* Asegura que el texto esté centrado */
+            }
+
+
+
+            .footer-container {
+                flex-direction: column;
+                /* Cambia las columnas a filas */
+                align-items: center;
+                /* Alinea los elementos al centro */
+            }
+
+            .contact-item {
+                text-align: center;
+                /* Centra el texto de los items */
+            }
+
+            .quienes-somos {
+                margin-left: 0;
+                /* Elimina el margen izquierdo para centrar el enlace en pantallas pequeñas */
+                margin-top: 20px;
+                /* Agrega un poco de espacio superior */
+                align-self: center;
+                /* Centra horizontalmente en el contexto de la columna */
+            }
+
+            .iconos img {
+                margin-right: 0;
+                margin-bottom: 10px;
+                /* Espacio entre los íconos en móviles */
+            }
+
+
+
+            /* HEADER */
+
+            .arriba {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header .logo,
+            header .nav,
+            header .user {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            header .nav {
+                width: 100%;
+                position: relative;
+                /* Mantiene el posicionamiento relativo */
+            }
+
+            header .nav span {
+                display: inline-block;
+                cursor: pointer;
+            }
+
+            header .submenu {
+                position: relative;
+                /* Ahora es relativo para que ocupe espacio y empuje el contenido */
+                background-color: #fff;
+                /* Fondo para que sea visible */
+                display: none;
+                /* Oculto por defecto */
+                padding: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                /* Sombra para visibilidad */
+                z-index: 1;
+            }
+
+            header .submenu ul {
+                display: flex;
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+            }
+
+            header .submenu li {
+                list-style: none;
+                padding: 5px 0;
+            }
+
+            /* Muestra el submenú cuando se hace hover sobre el botón "Servicios" */
+            header .nav:hover .submenu {
+                display: block;
+                /* El submenú ahora empuja el contenido hacia abajo */
+            }
+
+            .nav {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+
+            .user {
+                margin-top: 20px;
+            }
+        }
     </style>
     <title>Musicoterapia</title>
 </head>
+
 <body>
-  <header>   
-    <div class="arriba">
-    <div class="logo">
-        <img src="images/logo.png" alt="Logo">
-        <h1>Musicoterapia</h1>
-  
-    </div>
-    <div class="nav">
-      <span>Servicios</span>
-        <div class="submenu">
-        <ul>
-          <li>Biblioterapia</li>
-          <li>Arteterapia</li>
-          <li>Musicoterapia</li>
-          <li>Ejercicios</li>
-      </ul>
-    </div>
-  </div>
-  <div class="user">
-        <a href="#">Juanito Alimaña</a>
-        <img src="images/user.png" alt="Profile Picture">
-      </div>
-  
+    <header>
+        <div class="arriba">
+            <div class="logo">
+                <img src="images/logo.png" alt="Logo">
+                <h1>Musicoterapia</h1>
+
+            </div>
+            <div class="nav">
+                <span>Servicios</span>
+                <div class="submenu">
+                    <ul>
+                        <li>Biblioterapia</li>
+                        <li>Arteterapia</li>
+                        <li>Musicoterapia</li>
+                        <li>Ejercicios</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="user">
+                <a href="#">Juanito Alimaña</a>
+                <img src="images/user.png" alt="Profile Picture">
+            </div>
+
     </header>
 
 
@@ -436,7 +559,7 @@ h1{
                     <span>Podcast</span>
                 </a>
             </div>
-           
+
             <div class="menu-item">
                 <a href="binaurales.html" style="text-decoration: none;">
                     <img src="images/binaural.png" alt="Icon">
@@ -463,7 +586,7 @@ h1{
             </div>
         </aside>
 
-        
+
         <main class="main-content">
             <div class="title">
                 <span>Géneros</span>
@@ -472,58 +595,63 @@ h1{
 
 
                 <div class="genre">
-                     <a href="genero_elegido.html?genreId=1">
-                        <img src="images/clasica.png" alt="Clásica" onerror="this.onerror=null;this.src='img/placeholder.png';">
-                    <h3>Clásica</h3>
-                </a>
+                    <a href="genero_elegido.html?genreId=1">
+                        <img src="images/clasica.png" alt="Clásica"
+                            onerror="this.onerror=null;this.src='img/placeholder.png';">
+                        <h3>Clásica</h3>
+                    </a>
                 </div>
 
 
                 <div class="genre">
-                    <a href="genero_elegido.html">
-                    <img src="images/ambiental.png" alt="Ambiental" onerror="this.onerror=null;this.src='img/placeholder.png';">
-                    <h3>Ambiental</h3>
+                    <a href="genero_elegido.html?genreId=2">
+                        <img src="images/ambiental.png" alt="Ambiental"
+                            onerror="this.onerror=null;this.src='img/placeholder.png';">
+                        <h3>Ambiental</h3>
                     </a>
                 </div>
                 <div class="genre">
-                    <a href="genero_elegido.html">
-                    <img src="images/instrumental.png" alt="Instrumental" onerror="this.onerror=null;this.src='img/placeholder.png';">
-                    <h3>Instrumental</h3>
-                </a>
+                    <a href="genero_elegido.html?genreId=3">
+                        <img src="images/instrumental.png" alt="Instrumental"
+                            onerror="this.onerror=null;this.src='img/placeholder.png';">
+                        <h3>Instrumental</h3>
+                    </a>
                 </div>
                 <div class="genre">
-                    <a href="genero_elegido.html">
-                    <img src="images/electronica.png" alt="Electrónica" onerror="this.onerror=null;this.src='img/placeholder.png';">
-                    <h3>Electrónica</h3>
-                </a>
+                    <a href="genero_elegido.html?genreId=4">
+                        <img src="images/electronica.png" alt="Electrónica"
+                            onerror="this.onerror=null;this.src='img/placeholder.png';">
+                        <h3>Electrónica</h3>
+                    </a>
                 </div>
             </div>
         </main>
     </div>
     <footer class="footer">
-      <div class="footer-container">
-        <div class="contact-item">
-            <span>Contáctanos</span>
-            <div class="iconos">
-                <a href="#"><img src="images/WhatsApp.png" alt="WhatsApp"></a>
+        <div class="footer-container">
+            <div class="contact-item">
+                <span>Contáctanos</span>
+                <div class="iconos">
+                    <a href="#"><img src="images/WhatsApp.png" alt="WhatsApp"></a>
+                </div>
             </div>
-        </div>
-        <div class="contact-item">
-            <span>Canales de atención</span>
-            <div class="iconos">
-                <a href="#"><img src="images/Telegram App.png" alt="Telegram"></a>
-                <a href="#"><img src="images/Email.png" alt="Email"></a>
+            <div class="contact-item">
+                <span>Canales de atención</span>
+                <div class="iconos">
+                    <a href="#"><img src="images/Telegram App.png" alt="Telegram"></a>
+                    <a href="#"><img src="images/Email.png" alt="Email"></a>
+                </div>
             </div>
-        </div>
-        <div class="contact-item">
-            <span>Redes sociales</span>
-            <div class="iconos">
-                <a href="#"><img src="images/Facebook.png" alt="Facebook"></a>
-                <a href="#"><img src="images/Instagram.png" alt="Instagram"></a>
+            <div class="contact-item">
+                <span>Redes sociales</span>
+                <div class="iconos">
+                    <a href="#"><img src="images/Facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="images/Instagram.png" alt="Instagram"></a>
+                </div>
             </div>
+            <a class="quienes-somos" href="#">¿Quiénes somos?</a>
         </div>
-        <a class="quienes-somos" href="#">¿Quiénes somos?</a>
-    </div>
     </footer>
 </body>
+
 </html>

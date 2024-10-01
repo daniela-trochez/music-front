@@ -727,6 +727,87 @@
       }
 
     }
+        /* Estilos para pantallas más pequeñas, como tablets o móviles */
+        @media only screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+        /* Ajustar altura automática */
+      }
+
+      .sidebar {
+        width: 100%;
+        /* Ocupar todo el ancho disponible */
+        margin-bottom: 20px;
+        /* Espacio entre el sidebar y el contenido principal */
+        padding: 8px 16px;
+      }
+
+
+      .main-content {
+        width: 100%;
+        /* Ocupar todo el ancho disponible */
+
+      }
+
+      .image-container {
+        /* Ajustar el margen izquierdo */
+        margin-left: 0;
+        text-align: left;
+        /* Centrar el contenido */
+
+      }
+
+      .image-container2 {
+        margin-left: 0;
+        text-align: center;
+        /* Centrar el contenido */
+        width: 100%;
+        /* Ajustar el ancho al 100% */
+        padding: 10px;
+        /* Agregar algo de padding si es necesario */
+      }
+
+      .track-list {
+        max-height: none;
+        /* Ajustar altura automática */
+        width: 100%;
+        /* Ajustar el ancho al 100% */
+        padding: 10px;
+        /* Agregar algo de padding si es necesario */
+        box-sizing: border-box;
+        overflow-y: auto;
+        background-size: cover;
+        /* Asegura que la imagen cubra el contenedor sin distorsionarse */
+        background-position: center;
+        /* Centra la imagen de fondo */
+        background-repeat: no-repeat;
+        /* Evita que la imagen se repita */
+      }
+
+
+      .corner-text {
+        font-size: 1.5em;
+        /* Reducir tamaño de fuente para pantallas pequeñas */
+        top: 10px;
+        left: 10px;
+      }
+
+      .bottom-left-text {
+        font-size: 1em;
+        /* Reducir tamaño de fuente para pantallas pequeñas */
+        bottom: 10px;
+        left: 10px;
+      }
+
+      .title {
+        font-size: 35px;
+        /* Reducir el tamaño del título */
+        margin-left: 20px;
+        /* Ajustar el margen izquierdo */
+        text-align: center;
+      }
+    }
   </style>
 
 </head>

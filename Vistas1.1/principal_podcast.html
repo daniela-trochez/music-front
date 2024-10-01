@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,171 +9,200 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
   <title>Musicoterapia</title>
   <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      margin: 0;
+      position: absolute;
+      padding: 0;
+      background-color: #fffcfc;
+      width: 100%;
+      left: 0%;
+    }
+
     .contenedor-principal {
-    position: relative;
-}
-     /* Estilos adicionales para la interacción */
-     .genre:hover img,
-        .imagen-footer:hover,
-        .title:hover span,
-        .nav a:hover {
-            transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
-        }
-        /* Fin de estilos adicionales para la interacción */
+      position: relative;
+    }
 
-        .imagen-usuario {
-            width: 30px;
-            height: 30px;
-        }
+    /* Estilos adicionales para la interacción */
+    .genre:hover img,
+    .imagen-footer:hover,
+    .title:hover span,
+    .nav a:hover {
+      transform: scale(1.1);
+      /* Aumenta el tamaño al pasar el cursor */
+    }
 
-        .body {
-            padding: 20px;
-        }
+    /* Fin de estilos adicionales para la interacción */
 
-        footer {
-    background-color: #59009A;
-    color: #ffffff;
-    padding: 10px;
-}
 
-.footer-container {
-    display: flex;
-    padding: 0;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-}
 
-.contact-item {
-    display: flex;
-    flex-direction: column;
-    padding-left: 10px;
-    padding-right: 10px;
-    align-items: center;
-    text-align: center;
-}
+    footer {
+      background-color: #59009A;
+      color: #ffffff;
+      padding: 0.625rem;
+      /* 10px */
+    }
 
-.contact-item span {
-    margin-bottom: 5px;
-}
+    .footer-container {
+      display: flex;
+      padding: 0;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+    }
 
-.iconos {
-    display: flex;
-    justify-content: center;
-}
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0.625rem;
+      padding-right: 0.625rem;
+      align-items: center;
+      text-align: center;
+    }
 
-.iconos a {
-    margin: 0 10px;
-}
+    .contact-item span {
+      margin-bottom: 0.3125rem;
+      /* 5px */
+    }
 
-.iconos img {
-    width: 24px;
-    height: 24px;
-}
+    .iconos {
+      display: flex;
+      justify-content: center;
+    }
 
-.quienes-somos {
-    align-self: center;
-    color: #ffffff;
-    text-decoration: none;
-    margin-left: auto;
-}
-h1{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: #59009A;
-    font-style: italic;
-  }
-  
- 
-  
-  body {
-    font-family: sans-serif;
-    margin: 0;
-    position: absolute;
-    padding: 0;
-    background-color: #fffcfc;
-    width: 100%;
-    left: 0%;
-  }
-  
-  .arriba {
+    .iconos a {
+      margin: 0 0.625rem;
+      /* 10px */
+    }
+
+    .iconos img {
+      width: 1.5rem;
+      /* 24px */
+      height: 1.5rem;
+      /* 24px */
+    }
+
+    .quienes-somos {
+      align-self: center;
+      color: #ffffff;
+      text-decoration: none;
+      margin-left: auto;
+    }
+
+    h1 {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      color: #59009A;
+      font-style: italic;
+
+    }
+
+
+
+
+    .arriba {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px;
       border-bottom: 1px solid #333;
-  }
-  .logo {
+      flex-wrap: wrap;
+      /* Permite que los elementos se envuelvan cuando el espacio es pequeño */
+    }
+
+    .logo {
       display: flex;
       align-items: center;
-  }
-  .logo img {
+    }
+
+    .logo img {
       width: 50px;
       height: 50px;
       margin-right: 10px;
-  }
-  .logo h1 {
+    }
+
+    .logo h1 {
       margin: 0;
-  }
-  .user {
+    }
+
+    .user {
       display: flex;
       align-items: center;
       margin: 0px;
-  }
-  .user a {
+    }
+
+    .user a {
       margin-right: 20px;
       color: #59009A;
       text-decoration: none;
-    
+
       margin-inline-start: auto;
-  }
-  .user img {
+    }
+
+    .user img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
-  }
-  .nav {
-    color: #59009A;
-    position: relative;
-    margin-left: 880px;
-    
+    }
+
+    .nav {
+      position: relative;
+      color: #59009A;
+      display: flex;
+     
+      align-items: center;
+      /* Centrar verticalmente */
+      margin-left: auto;
+      /* Empuja la navegación a la derecha */
+      display: inline-block; 
+
     }
     
+   
+
+    .nav span {
+      margin-right: 20px;
+      /* Espacio entre el texto de navegación y el siguiente elemento */
+    }
+
     .submenu {
-    position: absolute;
-    z-index: 1000; /* Valor alto para asegurar que se muestre por encima */
-    background-color: #fff;
-    padding: 5px 5px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    display: none;
-    top: 100%; /* Ajusta según sea necesario */
-    left: 0; /* Ajusta según sea necesario */
-    width: auto;
-}
+      display: none;
+      position: absolute;
+      background-color: #fff;
 
-/* Muestra el menú al pasar el cursor sobre el botón */
-.nav:hover .submenu {
-    display: block;
-}
-    
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+      top: 100%;
+      left: 0px;
+      width: auto;
+      z-index: 177777;
+    }
+
+    .nav:hover .submenu,
+    .submenu:hover {
+      display: flex;
+      /* Muestra el submenú */
+    }
+
     .submenu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    }
-    
-    .submenu li {
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    }
-    
-    .submenu li:hover {
-    background-color: #f0f0f0;
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
-        
-      /* Estilos del contenedor principal */
-      .container {
+    .submenu li {
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .submenu li:hover {
+      background-color: #f0f0f0;
+    }
+
+
+    /* Estilos del contenedor principal */
+    .container {
       display: flex;
       height: calc(100vh - 126px);
       flex: 1;
@@ -189,79 +219,86 @@ h1{
     }
 
 
-      /* Estilos de los elementos del menu en la barra lateral */
-      .sidebar .menu-item {
-        padding: 12px;
-        margin: 10px 0;
-        background: #fff;
-        border-radius: 15px;
-        transition: background 0.3s ease;
-      }
+    /* Estilos de los elementos del menu en la barra lateral */
+    .sidebar .menu-item {
+      padding: 0.75rem;
+      /* 12px */
+      margin: 0.625rem 0;
+      /* 10px */
+      background: #fff;
+      border-radius: 0.9375rem;
+      /* 15px */
+      transition: background 0.3s ease;
+    }
 
-      /* Estilos de los elementos del menú cuando están activos o al pasar el ratón */
-      .sidebar .menu-item.active,
-      .sidebar .menu-item:hover {
-        background: linear-gradient(#ffffff, #9c76c1);
-        box-shadow: 1px 5px 10px 0.1px rgb(145, 145, 145);
-      }
+    /* Estilos de los elementos del menú cuando están activos o al pasar el ratón */
+    .sidebar .menu-item.active,
+    .sidebar .menu-item:hover {
+      background: linear-gradient(#ffffff, #9c76c1);
+      box-shadow: 1px 5px 10px 0.1px rgb(145, 145, 145);
+    }
 
-      /* Estilos de las imágenes dentro de los elementos del menú */
-      .sidebar .menu-item img {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-      }
+    /* Estilos de las imágenes dentro de los elementos del menú */
+    .sidebar .menu-item img {
+      width: 1.5rem;
+      /* 24px */
+      height: 1.5rem;
+      /* 24px */
+      margin-right: 0.625rem;
+      /* 10px */
+    }
 
-      /* Estilos de los enlaces dentro de los elementos del menú */
-      .sidebar .menu-item a {
-        display: flex;
-        align-items: center;
-        color: inherit;
-        text-decoration: none;
-        justify-content: center;
-      }
+    /* Estilos de los enlaces dentro de los elementos del menú */
+    .sidebar .menu-item a {
+      display: flex;
+      align-items: center;
+      color: inherit;
+      text-decoration: none;
+      justify-content: center;
+    }
 
-      /* Estilos del texto dentro de los elementos del menú */
-      .sidebar .menu-item span {
-        flex-grow: 1;
-        text-align: center;
-        font-size: 16px;
-      }
+    /* Estilos del texto dentro de los elementos del menú */
+    .sidebar .menu-item span {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 1rem;
+      /* 16px */
+    }
 
-      /* Estilos del contenido principal */
-      .main-content {
-        width: 75%;
-        padding: 20px;
-        overflow-y: auto;
-      }
+    /* Estilos del contenido principal */
+    .main-content {
+      width: 75%;
+      padding: 1.25rem;
+      /* 20px */
+      overflow-y: auto;
+    }
 
-        .main-content {
-            width: 75%;
-            padding: 20px;
-            overflow-y: auto;
-        }
 
-        .title {
-            margin-right: 50px;
-            display: flex;
-            align-items: center;
-            font-size: 75px;
-            margin-bottom: 20px;
-            position: relative;
-            margin-left: 335px;
-            font-family: 'Roboto Slab', serif; /* Añadido para la fuente del título */
-        }
 
-        .title span {
-            position: relative;
-            z-index: 1;
-            transition: color 0.3s;
-        }
+    .title {
+      display: flex;
+      justify-content: center;
+      /* Centra horizontalmente */
+      align-items: center;
+      /* Centra verticalmente */
+      font-size: 4.6875rem;
+      /* 75px */
+      margin-bottom: 3.25rem;
+      /* 20px */
+      font-family: 'Roboto Slab', serif;
+    }
 
-        .genres {
+    .title span {
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s;
+    }
+
+    .genres {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 1.25rem;
+      /* 20px */
       justify-content: space-between;
     }
 
@@ -272,13 +309,10 @@ h1{
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-bottom: 40px;
     }
 
-    .genre h3 {
-      font-family: 'Roboto Slab', serif;
-      margin-bottom: 10px;
-      margin-top: 10px;
-    }
+
 
     .genre img.imagen-interactiva {
       width: 60%;
@@ -293,111 +327,77 @@ h1{
     }
 
     .boton-enlace {
-    display: inline-block; /* Asegura que el enlace solo ocupe el espacio necesario */
-}
-.add-button {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer; /* Cambia el cursor a mano para indicar que es clickeable */
-}
+      display: inline-block;
+      /* Asegura que el enlace solo ocupe el espacio necesario */
+    }
 
-    .scroll-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #59009a;
-      color: white;
+    .add-button {
+      background: none;
       border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 40;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      
+     
     }
 
-    .scroll-button i {
-      font-size: 24px;
+
+
+
+    .title span {
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s;
     }
-    /* Estilos del contenido principal */
-    .main-content {
-        width: 75%;
-        padding: 20px;
-        overflow-y: auto;
-      }
-
-        .main-content {
-            width: 75%;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .title {
-            margin-right: 50px;
-            display: flex;
-            align-items: center;
-            font-size: 75px;
-            margin-bottom: 20px;
-            position: relative;
-            margin-left: 385px;
-            font-family: 'Roboto Slab', serif; /* Añadido para la fuente del título */
-        }
-        .title span {
-            position: relative;
-            z-index: 1;
-            transition: color 0.3s;
-        }
-
-        .genres {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            font-family: 'Roboto', sans-serif; /* Fuente Roboto para el contenedor de géneros */
-        }
-
-        .genre {
-            width: calc(50% - 20px);
-            text-align: center;
-        }
-
-        .genre h3 {
-            margin-bottom: 10px;
-            font-family: 'Roboto Slab', serif; /* Fuente Roboto Slab para los títulos */
-            transition: color 0.3s; /* Agrega una transición de color al pasar el cursor sobre el título */
-        }
-
-        .genre:hover h3 {
-            color: #59009A; /* Cambia el color del título al pasar el cursor */
-        }
-
-        .genre img.imagen-interactiva {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    height: 280px; /* Define un alto fijo para todas las imágenes */
-    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
-    border-radius: 10px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
 
 
-.genre:hover img.imagen-interactiva {
-    opacity: 0.8;
-    transform: scale(1.1);
-}
 
-        .genres a {
-    color: inherit; /* Inherits the color from parent elements */
-    text-decoration: none; /* Removes the underline */
-}
+    .genre h3 {
+      margin-bottom: 0.625rem;
+      /* 10px */
+      font-family: 'Roboto Slab', serif;
+      transition: color 0.3s;
+      margin-top: 0.625rem;
+      /* 10px */
+    }
 
-.genres a:hover {
-    color: #59009A; /* Optional: Change color on hover for visual feedback */
-}
-.add-button {
-      background-color: rgba(255, 255, 255, 0.5); /* Hacemos el fondo semi-transparente */
-      color: #4E27BF;
+    .genre:hover h3 {
+      color: #59009A;
+      /* Cambia el color del título al pasar el cursor */
+    }
+
+    .genre img.imagen-interactiva {
+      width: 100%;
+      /* Ocupa todo el ancho disponible */
+      height: 280px;
+      /* Define un alto fijo para todas las imágenes */
+      object-fit: cover;
+      /* Asegura que la imagen cubra el área sin distorsionarse */
+      border-radius: 10px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0.8;
+      transform: scale(1.2);
+    }
+
+
+
+
+    .genres a {
+      color: inherit;
+      /* Inherits the color from parent elements */
+      text-decoration: none;
+      /* Removes the underline */
+    }
+
+    .genres a:hover {
+      color: #59009A;
+      /* Optional: Change color on hover for visual feedback */
+    }
+
+    .add-button {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.5);
+      /* Hacemos el fondo semi-transparente */
+      color: #473971;
       border: none;
       border-radius: 50%;
       width: 40px;
@@ -406,15 +406,20 @@ h1{
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añadimos un sombreado */
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Añadimos transiciones */
-      margin-top: auto; /* Coloca el botón al final del contenedor */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      /* Añadimos un sombreado */
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      /* Añadimos transiciones */
+      margin-top: auto;
+      /* Coloca el botón al final del contenedor */
     }
 
     .add-button:hover {
-      background-color: rgba(255, 255, 255, 0.7); /* Cambiamos el color de fondo semi-transparente en hover */
+      background-color: rgba(255, 255, 255, 0.7);
+      /* Cambiamos el color de fondo semi-transparente en hover */
       transform: scale(1.1);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombreado más pronunciado en hover */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      /* Sombreado más pronunciado en hover */
     }
 
     .add-button i {
@@ -422,41 +427,20 @@ h1{
       color: #4E27BF;
     }
 
-    .scroll-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #59009a;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+
+    /* Estilo para el título Álbum */
+    .main-content .title span {
+      font-family: 'Roboto', sans-serif;
+      /* Cambia la fuente a Roboto */
     }
 
-    .scroll-button i {
-      font-size: 24px;
-    }
 
-        /* Estilo para el título Álbum */
-        .main-content .title span {
-            font-family: 'Roboto', sans-serif; /* Cambia la fuente a Roboto */
-        }
-    
 
-        /* Estilo para el título Álbum */
-        .main-content .title span {
-            font-family: 'Roboto', sans-serif; /* Cambia la fuente a Roboto */
-        }
 
-               
+
     /* Estilos para pantallas más pequeñas, como tablets o móviles */
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 885px) {
       .container {
         flex-direction: column;
         height: auto;
@@ -464,7 +448,7 @@ h1{
       }
 
       .sidebar {
-        width: 100%;
+        width: 95%;
         /* Ocupar todo el ancho disponible */
         margin-bottom: 20px;
         /* Espacio entre el sidebar y el contenido principal */
@@ -473,53 +457,19 @@ h1{
 
 
       .main-content {
+        overflow-x: hidden;
+        /* Evita el desplazamiento horizontal */
+        margin: 0;
+        /* Asegúrate de que no haya márgenes que causen desplazamiento */
         width: 100%;
         /* Ocupar todo el ancho disponible */
 
       }
 
-      .image-container {
-        /* Ajustar el margen izquierdo */
-        margin-left: 0;
-        text-align: left;
-        /* Centrar el contenido */
-
-      }
-
-      .image-container2 {
-        margin-left: 0;
-        text-align: center;
-        /* Centrar el contenido */
-        width: 100%;
-        /* Ajustar el ancho al 100% */
-        padding: 10px;
-        /* Agregar algo de padding si es necesario */
-      }
-
-      .track-list {
-        max-height: none;
-        /* Ajustar altura automática */
-        width: 100%;
-        /* Ajustar el ancho al 100% */
-        padding: 10px;
-        /* Agregar algo de padding si es necesario */
-        box-sizing: border-box;
-        overflow-y: auto;
-        background-size: cover;
-        /* Asegura que la imagen cubra el contenedor sin distorsionarse */
-        background-position: center;
-        /* Centra la imagen de fondo */
-        background-repeat: no-repeat;
-        /* Evita que la imagen se repita */
-      }
 
 
-      .corner-text {
-        font-size: 1.5em;
-        /* Reducir tamaño de fuente para pantallas pequeñas */
-        top: 10px;
-        left: 10px;
-      }
+
+
 
       .bottom-left-text {
         font-size: 1em;
@@ -528,42 +478,144 @@ h1{
         left: 10px;
       }
 
+      /* FOOT */
+
       .title {
-        font-size: 35px;
-        /* Reducir el tamaño del título */
-        margin-left: 20px;
-        /* Ajustar el margen izquierdo */
+        font-size: 3.4375rem;
+        /* Cambiar el tamaño del texto para pantallas pequeñas */
+        margin: 20px;
+        width: 100%;
+        /* Asegúrate de que ocupe el ancho completo */
         text-align: center;
+        /* Asegura que el texto esté centrado */
+      }
+
+
+
+      .footer-container {
+        flex-direction: column;
+        /* Cambia las columnas a filas */
+        align-items: center;
+        /* Alinea los elementos al centro */
+      }
+
+      .contact-item {
+        text-align: center;
+        /* Centra el texto de los items */
+      }
+
+      .quienes-somos {
+        margin-left: 0;
+        /* Elimina el margen izquierdo para centrar el enlace en pantallas pequeñas */
+        margin-top: 20px;
+        /* Agrega un poco de espacio superior */
+        align-self: center;
+        /* Centra horizontalmente en el contexto de la columna */
+      }
+
+      .iconos img {
+        margin-right: 0;
+        margin-bottom: 10px;
+        /* Espacio entre los íconos en móviles */
+      }
+
+
+
+
+      /* HEADER */
+
+      .arriba {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header .logo,
+      header .nav,
+      header .user {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+
+      header .nav {
+        width: 100%;
+        position: relative;
+        /* Mantiene el posicionamiento relativo */
+      }
+
+      header .nav span {
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      header .submenu {
+        position:relative;
+        /* Ahora es relativo para que ocupe espacio y empuje el contenido */
+        background-color: #fff;
+        /* Fondo para que sea visible */
+        display: none;
+        /* Oculto por defecto */
+        padding: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        /* Sombra para visibilidad */
+        z-index: 1;
+      }
+
+      header .submenu ul {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+      }
+
+      header .submenu li {
+        list-style: none;
+        padding: 5px 0;
+      }
+
+      /* Muestra el submenú cuando se hace hover sobre el botón "Servicios" */
+      header .nav:hover .submenu {
+        display: block;
+        /* El submenú ahora empuja el contenido hacia abajo */
+      }
+
+      .nav {
+        margin-left: 0;
+        margin-top: 20px;
+      }
+
+      .user {
+        margin-top: 20px;
       }
     }
-
   </style>
 </head>
+
 <body>
-  <header>   
+  <header>
     <div class="arriba">
-    <div class="logo">
+      <div class="logo">
         <img src="images/logo.png" alt="Logo">
         <h1>Musicoterapia</h1>
-  
-    </div>
-    <div class="nav">
-      <span>Servicios</span>
+
+      </div>
+      <div class="nav">
+        <span>Servicios</span>
         <div class="submenu">
-        <ul>
-          <li>Biblioterapia</li>
-          <li>Arteterapia</li>
-          <li>Musicoterapia</li>
-          <li>Ejercicios</li>
-      </ul>
-    </div>
-  </div>
-  <div class="user">
+          <ul>
+            <li>Biblioterapia</li>
+            <li>Arteterapia</li>
+            <li>Musicoterapia</li>
+            <li>Ejercicios</li>
+          </ul>
+        </div>
+      </div>
+      <div class="user">
         <a href="#">Juanito Alimaña</a>
         <img src="images/user.png" alt="Profile Picture">
       </div>
-  
-    </header>
+
+  </header>
   <div class="container">
     <aside class="sidebar">
       <br>
@@ -618,59 +670,60 @@ h1{
       <div class="genres">
         <div class="genre">
           <a href="vistas_podcast.html">
-          <img src="images/afirmaciones.png" alt="Affirmations" class="imagen-interactiva">
-          <h3>Afirmaciones</h3>
-        </a>
+            <img src="images/afirmaciones.png" alt="Affirmations" class="imagen-interactiva">
+            <h3>Afirmaciones</h3>
+          </a>
         </div>
         <div class="genre">
           <a href="vistas_podcast.html">
-          <img src="images/autoestima.png" alt="Affirmations" class="imagen-interactiva">
-          <h3>Autoestima</h3>
-        </a>
+            <img src="images/autoestima.png" alt="Affirmations" class="imagen-interactiva">
+            <h3>Autoestima</h3>
+          </a>
         </div>
         <div class="genre">
           <a href="vistas_podcast.html">
-          <img src="images/motivacion.png" alt="Affirmations" class="imagen-interactiva">
-          <h3>Motivación</h3>
-        </a>
+            <img src="images/motivacion.png" alt="Affirmations" class="imagen-interactiva">
+            <h3>Motivación</h3>
+          </a>
         </div>
         <div class="genre">
           <a href="principal_archivos.html">
-              <img src="images/boton+.png" alt="Affirmations" class="imagen-interactiva">
+            <img src="images/boton+.png" alt="Affirmations" class="imagen-interactiva">
           </a>
           <a href="principal_archivos.html" class="boton-enlace">
-              <button class="add-button">
-                  <i class="material-icons">add</i>
-              </button>
+            <button class="add-button">
+              <i class="material-icons">add</i>
+            </button>
           </a>
-      </div>
+        </div>
       </div>
     </main>
   </div>
   <footer class="footer">
     <div class="footer-container">
       <div class="contact-item">
-          <span>Contáctanos</span>
-          <div class="iconos">
-              <a href="#"><img src="images/WhatsApp.png" alt="WhatsApp"></a>
-          </div>
+        <span>Contáctanos</span>
+        <div class="iconos">
+          <a href="#"><img src="images/WhatsApp.png" alt="WhatsApp"></a>
+        </div>
       </div>
       <div class="contact-item">
-          <span>Canales de atención</span>
-          <div class="iconos">
-              <a href="#"><img src="images/Telegram App.png" alt="Telegram"></a>
-              <a href="#"><img src="images/Email.png" alt="Email"></a>
-          </div>
+        <span>Canales de atención</span>
+        <div class="iconos">
+          <a href="#"><img src="images/Telegram App.png" alt="Telegram"></a>
+          <a href="#"><img src="images/Email.png" alt="Email"></a>
+        </div>
       </div>
       <div class="contact-item">
-          <span>Redes sociales</span>
-          <div class="iconos">
-              <a href="#"><img src="images/Facebook.png" alt="Facebook"></a>
-              <a href="#"><img src="images/Instagram.png" alt="Instagram"></a>
-          </div>
+        <span>Redes sociales</span>
+        <div class="iconos">
+          <a href="#"><img src="images/Facebook.png" alt="Facebook"></a>
+          <a href="#"><img src="images/Instagram.png" alt="Instagram"></a>
+        </div>
       </div>
       <a class="quienes-somos" href="#">¿Quiénes somos?</a>
-  </div>
+    </div>
   </footer>
 </body>
+
 </html>

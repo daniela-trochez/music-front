@@ -6,22 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>genero_elegido</title>
   <style>
-    /* Estilos generales para el cuerpo de la pagina */
-    body {
-      margin: 0;
-      font-family: "Roboto", sans-serif;
-      display: flex;
-      flex-direction: column;
-    }
-
-    body {
+        body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: url('images/fondoselegidos.png') no-repeat center center fixed;
       background-size: cover;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
     }
 
-    /* Estilos del encabezado de la página */
+
+
     h1 {
       font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
       color: #59009A;
@@ -30,15 +26,7 @@
 
 
 
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      position: absolute;
-      padding: 0;
-      background-color: #fffcfc;
-      width: 100%;
-      left: 0%;
-    }
+
 
     .arriba {
       display: flex;
@@ -694,6 +682,64 @@
 
     .me-gusta.active {
       color: #59009A;
+    }
+     /* Estilos para pantallas más pequeñas, como tablets o móviles */
+     @media only screen and (max-width: 1200px) {
+      .content {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+      }
+
+      .tracks-container {
+        margin-top: 20px;
+        width: 90%;
+        max-width: 100%;
+        /* Asegurar que ocupe todo el ancho disponible */
+        margin-left: 195px;
+        margin-top: 50px;
+
+
+
+      }
+
+      .player {
+        width: 90%;
+        /* Asegurar que el reproductor también ocupe todo el ancho */
+        max-width: 100%;
+        /* Asegurar que ocupe todo el ancho disponible */
+      }
+
+
+
+      .footer-container {
+        flex-direction: column;
+        /* Cambia las columnas a filas */
+        align-items: center;
+        /* Alinea los elementos al centro */
+      }
+
+      .contact-item {
+        text-align: center;
+        /* Centra el texto de los items */
+      }
+
+      .quienes-somos {
+        margin-left: 0;
+        /* Elimina el margen izquierdo para centrar el enlace en pantallas pequeñas */
+        margin-top: 20px;
+        /* Agrega un poco de espacio superior */
+        align-self: center;
+        /* Centra horizontalmente en el contexto de la columna */
+      }
+
+      .iconos img {
+        margin-right: 0;
+        margin-bottom: 10px;
+        /* Espacio entre los íconos en móviles */
+      }
+
     }
 
     /* Estilos para pantallas más pequeñas, como tablets o móviles */
